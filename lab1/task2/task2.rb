@@ -18,5 +18,18 @@ def sum_prime_divide(num)
 
   return s
 end
+
+def count_cifr(num)
+  s=0
+  while num>0
+    if num%10>3 && num%10%2==1
+      s+=1
+    end
+    num/=10
+  end
+  return s
+end
 #сумма простых делителей числа
-puts sum_prime_divide(10)
+# puts sum_prime_divide(10)
+# количество нечетных цифр цисла, больших 3
+puts count_cifr(5639)

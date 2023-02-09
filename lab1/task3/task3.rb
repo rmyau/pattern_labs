@@ -34,3 +34,21 @@ end
 # list=[-1,2,7,3]
 # puts max_el(list)
 # puts min_el(list)
+
+if ARGV.count<2
+  puts 'Недостаточно аргументов! Выберите метод и файл для чтения!'
+  return
+end
+
+num_method = ARGV[0].to_i
+file_name=ARGV[1]
+return unless num_method > 0 && num_method < 3
+list=File.open(file_name){|file| file.readlines.map(&:to_i)}
+
+methods = [method(:min_el), method(:max_el), method(:first_index_positive)]
+methods_name = ["минимальный элемент", "максимальный элемент", "индекс первого положительного элемента"]
+puts "Результат работы метода(#{methods_name[num_method]}): #{methods[num_method].call(list)}"
+
+
+
+

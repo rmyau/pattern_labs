@@ -10,7 +10,7 @@ end
 
 def sum_prime_divide(num)
   s=0
-  0.upto(num) do |i|
+  2.upto(num) do |i|
     if prime(i) && num%i==0
       s+=i
     end
@@ -29,7 +29,29 @@ def count_cifr(num)
   end
   return s
 end
-#сумма простых делителей числа
-# puts sum_prime_divide(10)
+
+def sum_cifr(num)
+  s=0
+  while num>0
+    s+=num%10
+    num/=10
+  end
+  return s
+end
+
+def mult_divides(num)
+  p=1
+  1.upto(num) do |i|
+    if  num%i==0 && sum_cifr(i)<sum_cifr(num)
+      p*=i
+    end
+  end
+  return p
+end
+
+# сумма простых делителей числа
+puts sum_prime_divide(10)
 # количество нечетных цифр цисла, больших 3
 puts count_cifr(5639)
+# произведение делителей с суммой цифр меньше, чем у исходного
+puts mult_divides(72)

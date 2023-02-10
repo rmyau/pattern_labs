@@ -36,18 +36,15 @@ def prime(num)
 end
 
 def divide_list(list)
-  res_divide = []
-  list.each do |el|
-    res = (2..el).inject([]) do |res,i|
+  list.inject([]) do |res_divide, el|
+    divide = (2..el).inject([]) do |res,i|
       res << i if prime(i)&& el%i==0
       res
     end
-    res_divide.concat(res)
+    res_divide.concat(divide).uniq
   end
-  res_divide.uniq
 end
 
-
-puts divide_list([10,6])
-
+file_name = ARGV[0]
+file = File.open(file_name)
 # puts max_in_interval([1,2,-2,4],0,0)

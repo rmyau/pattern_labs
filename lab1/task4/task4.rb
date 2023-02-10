@@ -9,4 +9,7 @@ def before_min_to_end(list)
   list.rotate(index_min)
 end
 
-puts before_min_to_end([1,3,-2,4])
+def max_in_interval(list, a,b)
+  list[a..b].max
+end
+puts max_in_interval([1,2,-2,4],0,0)

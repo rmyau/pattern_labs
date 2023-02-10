@@ -16,6 +16,7 @@ end
 def index_less_than_left(list)
   list.filter {|x| list.index(x)!=0 && x<list[list.index(x)-1] }.map {|el| list.index(el)}
 end
+
 puts index_less_than_left([2,4,1,5,3])
 
 

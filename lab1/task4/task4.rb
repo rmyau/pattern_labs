@@ -17,7 +17,12 @@ def index_less_than_left(list)
   list.filter {|x| list.index(x)!=0 && x<list[list.index(x)-1] }.map {|el| list.index(el)}
 end
 
-puts index_less_than_left([2,4,1,5,3])
+def index_less_than_left_repeat(list)
+  (1..list.size-1).inject([]) do |res,i|
+    res << i if list[i]<list[i-1]
+    res
+  end
+end
 
 
 

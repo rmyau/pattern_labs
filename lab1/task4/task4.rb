@@ -45,6 +45,37 @@ def divide_list(list)
   end
 end
 
+file_name = ARGV[0]
+array = File.open(file_name) {|file| file.readlines.map(&:to_i)}
+methods = [:count_after_last_max, :before_min_to_end, :max_in_interval,:index_less_than_left_repeat, :divide_list]
+puts 'Выберите:'
+puts '1. Количество элементов после максимального
+2. Элементы до минимального в конец массива
+3. Максимальный их элементов в заданном интервале
+4. Вывести индексы элементов, которые меньше своего левого соседа, и количество таких чисел
+5. Построить список всех положительных простых делителей элементов списка без повторений'
+
+method_num = STDIN.gets.chomp.to_i
+unless method_num.between?(1, methods.length)
+  puts 'Неизвестный метод'
+  return
+end
+
+
+if method_num==3
+  puts 'Введите границы интервала:'
+  print"a="
+  a=STDIN.gets.chomp.to_i
+  print"b="
+  b=STDIN.gets.chomp.to_i
+  res = method(methods[method_num-1]).call(array,a,b)
+else
+  res = method(methods[method_num-1]).call(array)
+end
+puts res.inspect
+if method_num==4
+  puts "Количество таких чисел: #{res.size}"
+end
 
 
 

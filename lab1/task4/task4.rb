@@ -11,7 +11,7 @@ def before_min_to_end(list)
 end
 
 def max_in_interval(list, a,b)
-  list[a..b].max
+  list.filter{|x| x>a&&x<b}.max
 end
 
 def index_less_than_left(list)
@@ -45,6 +45,7 @@ def divide_list(list)
   end
 end
 
-file_name = ARGV[0]
-file = File.open(file_name)
-# puts max_in_interval([1,2,-2,4],0,0)
+
+
+
+

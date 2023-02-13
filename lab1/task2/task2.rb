@@ -1,4 +1,4 @@
-def prime(num)
+def prime?(num)
   return true if num==2
   return false if num<=1
 
@@ -16,7 +16,7 @@ def sum_prime_divide(num)
     end
   end
 
-  return s
+  s
 end
 
 def count_cifr(num)
@@ -27,7 +27,7 @@ def count_cifr(num)
     end
     num/=10
   end
-  return s
+  s
 end
 
 def sum_cifr(num)
@@ -36,7 +36,7 @@ def sum_cifr(num)
     s+=num%10
     num/=10
   end
-  return s
+  s
 end
 
 def mult_divides(num)
@@ -46,7 +46,7 @@ def mult_divides(num)
       p*=i
     end
   end
-  return p
+  p
 end
 
 # сумма простых делителей числа

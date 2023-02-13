@@ -25,7 +25,7 @@ def index_less_than_left_repeat(list)
   end
 end
 
-def prime(num)
+def prime?(num)
   return true if num==2
   return false if num<=1
 

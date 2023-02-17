@@ -7,7 +7,7 @@ def prime?(num)
   end
   true
 end
-
+#сумма простых делителей
 def sum_prime_divide(num)
   s=0
   2.upto(num) do |i|
@@ -29,7 +29,7 @@ def count_cifr(num)
   end
   s
 end
-
+#сумма цифр числа
 def sum_cifr(num)
   s=0
   while num>0
@@ -39,6 +39,7 @@ def sum_cifr(num)
   s
 end
 
+# произведение делителей с суммой цифр меньше, чем у исходного
 def mult_divides(num)
   p=1
   1.upto(num) do |i|

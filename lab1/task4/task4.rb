@@ -1,23 +1,26 @@
-
+#количество элементов, расположенных после максимального
 def count_after_last_max(list)
   return 0 if list.empty?
   index_max = list.rindex(list.max)
   list.size - index_max-1
 end
 
+#перенос элементов, расположенных до минимального
 def before_min_to_end(list)
   index_min = list.index(list.min)
   list.rotate(index_min)
 end
 
+#возвращает максимальный из элементов в заданном интервале
 def max_in_interval(list, a,b)
   list.filter{|x| x>a&&x<b}.max
 end
 
+#индексы элементов, которые меньше своего левого соседа
 def index_less_than_left(list)
   list.filter {|x| list.index(x)!=0 && x<list[list.index(x)-1] }.map {|el| list.index(el)}
 end
-
+#то же
 def index_less_than_left_repeat(list)
   (1..list.size-1).inject([]) do |res,i|
     res << i if list[i]<list[i-1]
@@ -35,10 +38,11 @@ def prime?(num)
   true
 end
 
-def divide_list(list)
+#список всех положительных простых делителей элементов списка без повторений
+def list_prime_pos_divisors_el(list)
   list.inject([]) do |res_divide, el|
     divide = (2..el).inject([]) do |res,i|
-      res << i if prime(i)&& el%i==0
+      res << i if prime?(i)&& el%i==0
       res
     end
     res_divide.concat(divide).uniq
@@ -47,11 +51,11 @@ end
 
 file_name = ARGV[0]
 array = File.open(file_name) {|file| file.readlines.map(&:to_i)}
-methods = [:count_after_last_max, :before_min_to_end, :max_in_interval,:index_less_than_left_repeat, :divide_list]
+methods = [:count_after_last_max, :before_min_to_end, :max_in_interval,:index_less_than_left_repeat, :list_prime_pos_divisors_el]
 puts 'Выберите:'
 puts '1. Количество элементов после максимального
 2. Элементы до минимального в конец массива
-3. Максимальный их элементов в заданном интервале
+3. Максимальный из элементов в заданном интервале
 4. Вывести индексы элементов, которые меньше своего левого соседа, и количество таких чисел
 5. Построить список всех положительных простых делителей элементов списка без повторений'
 

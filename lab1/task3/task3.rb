@@ -1,3 +1,4 @@
+#возвращает минимальный элемент массива
 def min_el(list)
   if list.empty?
     return nil
@@ -10,6 +11,7 @@ def min_el(list)
   min
 end
 
+#возвращает максимальный элемент массива
 def max_el(list)
   if list.empty?
     return nil
@@ -22,6 +24,7 @@ def max_el(list)
   max
 end
 
+#индекс первого положительного элемента
 def first_index_positive(list)
   i=0
   while i<list.size && list[i]<0

@@ -12,6 +12,16 @@ class Student
     self.git=git
     self.email=email
   end
+  # def initialize(**hash_args)
+  #   self.last_name=hash_args[:last_name]
+  #   self.first_name=hash_args[:first_name]
+  #   self.second_name=hash_args[:second_name]
+  #   # self.id=id
+  #   # self.phone=phone
+  #   # self.telegram=telegram
+  #   # self.git=git
+  #   # self.email=email
+  # end
 
   def to_s
     res = "#{last_name} #{first_name} #{second_name}"

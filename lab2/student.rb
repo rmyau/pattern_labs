@@ -68,6 +68,18 @@ class Student
   def self.validate_email?(email)
     email.match(/^\w+[-\w.]+@([A-Za-z]+\.)+[A-z]{2,4}$/)
   end
+
+  def git?
+    !git.nil?
+  end
+
+  def find_contact?
+    !(telegram.nil? && email.nil? && phone.nil?)
+  end
+
+  def validate
+    git? && find_contact?
+  end
   def to_s
     res = "#{last_name} #{first_name} #{second_name}"
     res += " id=#{id}" unless id.nil?

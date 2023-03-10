@@ -73,11 +73,11 @@ class Student
     !git.nil?
   end
 
-  def find_contact?
+  def exist_contact?
     !(telegram.nil? && email.nil? && phone.nil?)
   end
 
-  def validate
+  def validate?
     git? && find_contact?
   end
   def to_s

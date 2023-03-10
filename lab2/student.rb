@@ -78,8 +78,15 @@ class Student
   end
 
   def validate?
-    git? && find_contact?
+    git? && exist_contact?
   end
+
+  def set_contacts(contacts)
+    self.email = contacts[:email] if contacts.key?(:email)
+    self.phone = contacts[:phone] if contacts.key?(:phone)
+    self.telegram = contacts[:telegram] if contacts.key?(:telegram)
+  end
+
   def to_s
     res = "#{last_name} #{first_name} #{second_name}"
     res += " id=#{id}" unless id.nil?

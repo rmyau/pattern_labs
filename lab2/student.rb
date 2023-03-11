@@ -7,10 +7,8 @@ class Student
     self.first_name=first_name
     self.second_name=second_name
     self.id=id
-    self.phone=phone
-    self.telegram=telegram
     self.git=git
-    self.email=email
+    set_contacts(**{telegram:telegram, phone: phone, email:email})
   end
 
   #set phone
@@ -81,10 +79,10 @@ class Student
     git? && exist_contact?
   end
 
-  def set_contacts(contacts)
-    self.email = contacts[:email] if contacts.key?(:email)
-    self.phone = contacts[:phone] if contacts.key?(:phone)
-    self.telegram = contacts[:telegram] if contacts.key?(:telegram)
+  def set_contacts(email:nil, phone:nil, telegram:nil)
+    self.email = email
+    self.phone = phone
+    self.telegram = telegram
   end
 
   def to_s
@@ -98,3 +96,17 @@ class Student
   end
 
 end
+
+
+def each(arr)
+  index=0
+  while index<arr.size
+    yield arr[index]
+    index+=1
+  end
+end
+
+each([1,2,3]) do |i|
+  puts i
+end
+

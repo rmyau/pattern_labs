@@ -1,8 +1,9 @@
-
+require 'json'
 class Student
   attr_accessor :id
   attr_reader :phone, :first_name, :second_name, :last_name, :telegram, :git, :email
-  def initialize(last_name:, first_name:, second_name:, id:nil, phone:nil, telegram: nil, git:nil, email: nil )
+  def initialize(last_name: nil, first_name: nil, second_name: nil, id:nil, phone:nil, telegram: nil, git:nil, email: nil )
+    raise ArgumentError, "Required fields: first_name, second_name and last_name!" if first_name.nil? || second_name.nil?|| last_name.nil?
     self.last_name=last_name
     self.first_name=first_name
     self.second_name=second_name
@@ -11,7 +12,11 @@ class Student
     set_contacts(**{telegram:telegram, phone: phone, email:email})
   end
 
-  #set phone
+  #конструктор для аргументов в строке
+  def self.from_json_str(str)
+    data=JSON.parse(str).transform_keys(&:to_sym)
+    Student.new(**data)
+  end
   def phone=(phone)
     raise ArgumentError, 'Invalid phone number!' unless phone.nil? || Student.validate_phone?(phone)
     @phone = phone
@@ -98,15 +103,4 @@ class Student
 end
 
 
-def each(arr)
-  index=0
-  while index<arr.size
-    yield arr[index]
-    index+=1
-  end
-end
-
-each([1,2,3]) do |i|
-  puts i
-end
 

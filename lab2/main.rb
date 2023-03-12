@@ -9,6 +9,10 @@ st2 = Student.new(**{first_name: "Карина", second_name: "Кареновн�
                      telegram: '@karina_super01', git: '@krasnova_kr'})
 puts st2
 
+puts st2.validate?
 
+
+st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
+puts st3
 
 

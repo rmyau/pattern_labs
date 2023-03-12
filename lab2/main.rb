@@ -10,9 +10,11 @@ st2 = Student.new(**{first_name: "Карина", second_name: "Кареновн�
 puts st2
 
 puts st2.validate?
-
+puts st2.short_name
+puts st1.getInfo
 
 st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
 puts st3
+
 
 

@@ -90,6 +90,28 @@ class Student
     self.telegram = telegram
   end
 
+  def short_name
+    "#{last_name} #{first_name[0]}. #{second_name[0]}."
+  end
+
+  def find_git
+    if git?
+      "git=#{git}"
+    else
+      "git: отсутствует"
+    end
+  end
+  def find_contact
+    if exist_contact?
+      return "phone: #{phone}" unless phone.nil?
+      return "telegram: #{telegram}" unless telegram.nil?
+      return "email: #{email}" unless email.nil?
+    end
+    "контактов для связи нет"
+  end
+  def getInfo
+    "#{short_name}, #{find_git}, #{find_contact}"
+  end
   def to_s
     res = "#{last_name} #{first_name} #{second_name}"
     res += " id=#{id}" unless id.nil?

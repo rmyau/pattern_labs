@@ -1,5 +1,5 @@
 require_relative 'student'
-
+require_relative 'student_short'
 
 st0=Student.new(**{first_name: "Александр",second_name: "Сергеевич",last_name: 'Кукушкин',id:3, phone:'89231432112'})
 puts st0
@@ -16,5 +16,10 @@ puts st1.getInfo
 st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
 puts st3
 
+st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
+puts st_sh1
+
+st_sh2=StudentShort.init_from_student(st3)
+puts st_sh2
 
 

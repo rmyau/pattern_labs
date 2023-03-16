@@ -15,6 +15,7 @@ class Student<BaseStudent
     data=JSON.parse(str).transform_keys(&:to_sym)
     Student.new(**data)
   end
+
   def first_name=(first_name)
     raise ArgumentError, 'Invalid first_name!' unless first_name.nil? || Student.validate_name?(first_name)
     @first_name=first_name
@@ -46,22 +47,11 @@ class Student<BaseStudent
     res = "#{last_name} #{first_name} #{second_name}"
     res += " id=#{id}" unless id.nil?
     res += " phone=#{phone}" unless phone.nil?
-    res += " git=#{git}" unless git.nil?
+    res += " #{find_git}"
     res += " telegram=#{telegram}" unless telegram.nil?
     res += " email=#{email}" unless email.nil?
     res
   end
-
-
-  # def initialize(last_name: nil, first_name: nil, second_name: nil, id:nil, phone:nil, telegram: nil, git:nil, email: nil )
-  #   raise ArgumentError, "Required fields: first_name, second_name and last_name!" if first_name.nil? || second_name.nil?|| last_name.nil?
-  #   self.last_name=last_name
-  #   self.first_name=first_name
-  #   self.second_name=second_name
-  #   # self.id=id
-  #   # self.git=git
-  #   set_contacts(**{telegram:telegram, phone: phone, email:email})
-  # end
 
 end
 

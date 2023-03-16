@@ -51,6 +51,7 @@ class BaseStudent
   def validate?
     git? && exist_contact?
   end
+
   #строка для вывода гита
   def find_git
     if git?

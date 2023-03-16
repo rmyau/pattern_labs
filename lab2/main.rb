@@ -15,11 +15,33 @@ puts st1.get_info
 
 st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
 puts st3
+#
+# st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
+# puts st_sh1
+#
+# st_sh2=StudentShort.init_from_student(st3)
+# puts st_sh2
 
-st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
-puts st_sh1
+def read_from_txt(file_path)
+  raise ArgumentError, 'File not found' unless File.exist?(file_path)
 
-st_sh2=StudentShort.init_from_student(st3)
-puts st_sh2
+  file = File.open(file_path, 'r')
+  info = ''
+  file.each do |line|
+    info << line
+  end
+  file.close
+  info=JSON.parse(info)
+  students_list = []
+
+  info.each do |student|
+    students_list << Student.from_json_str(student.to_json)
+  end
+  students_list
+end
+
+read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_info.txt').each do |st|
+  puts st.get_info
+end
 
 

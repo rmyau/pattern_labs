@@ -11,7 +11,7 @@ puts st2
 
 puts st2.validate?
 puts st2.short_name
-puts st1.getInfo
+puts st1.get_info
 
 st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
 puts st3

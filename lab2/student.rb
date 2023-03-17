@@ -57,6 +57,18 @@ class Student<BaseStudent
     res
   end
 
+  def to_hash
+    info_hash = {}
+    %i[last_name first_name second_name id phone telegram email git].each do |field|
+      info_hash[field] = send(field) unless send(field).nil?
+    end
+    info_hash
+  end
+
+  def to_json_str
+    JSON.generate(to_hash)
+  end
+
 end
 
 

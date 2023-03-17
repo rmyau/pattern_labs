@@ -14,9 +14,12 @@ require_relative 'student_short'
 # puts st1.get_info
 #
 st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
+st3.set_contacts(**{phone: '89621294567'})
 puts st3
+
 #
 st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
+
 puts st_sh1
 
 st_sh2=StudentShort.init_from_student(st3)
@@ -33,10 +36,22 @@ def read_from_txt(file_path)
 end
 
 
-puts '------------test read'
-read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_info.txt').each do |st|
-  puts st.get_info
+def write_to_txt(file_path, student_list)
+  res = '['
+  student_list.each do |st|
+
+    res += st.to_json_str + ","
+  end
+  res = res.chop + "]"
+  File.write(file_path, res)
 end
 
-
+puts '------------test read'
+st_list=read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_info.txt')
+st_list.each do |st|
+  puts st.get_info
+end
+puts '-------- test write'
+write_to_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt',st_list)
+puts read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt')
 

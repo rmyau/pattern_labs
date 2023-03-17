@@ -22,26 +22,21 @@ puts st_sh1
 st_sh2=StudentShort.init_from_student(st3)
 puts st_sh2
 
-# def read_from_txt(file_path)
-#   raise ArgumentError, 'File not found' unless File.exist?(file_path)
-#
-#   file = File.open(file_path, 'r')
-#   info = ''
-#   file.each do |line|
-#     info << line
-#   end
-#   file.close
-#   info=JSON.parse(info)
-#   students_list = []
-#
-#   info.each do |student|
-#     students_list << Student.from_json_str(student.to_json)
-#   end
-#   students_list
-# end
-#
-# read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_info.txt').each do |st|
-#   puts st.get_info
-# end
+def read_from_txt(file_path)
+  raise ArgumentError, 'File not found' unless File.exist?(file_path)
+
+  file = File.open(file_path){|file| file.read}
+  JSON.parse(file).inject([]) do |list, student|
+    list << Student.from_json_str(student.to_json)
+  end
+
+end
+
+
+puts '------------test read'
+read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_info.txt').each do |st|
+  puts st.get_info
+end
+
 
 

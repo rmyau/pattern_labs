@@ -1,10 +1,11 @@
 class BaseStudent
-  attr_reader :id, :git, :phone, :email, :telegram
+  #сделали класс абстрактным
+  private_class_method :new
+
+  protected
+
+  attr_reader :phone, :email, :telegram
   attr_writer :id
-  def initialize(id: nil, phone:nil, telegram: nil, email: nil, git:nil )
-    self.id=id
-    set_contacts(**{telegram:telegram, phone: phone, email:email})
-  end
 
   def telegram=(telegram)
     raise ArgumentError, 'Invalid telegram!' unless telegram.nil? || Student.validate_account?(telegram)
@@ -23,6 +24,13 @@ class BaseStudent
   def phone=(phone)
     raise ArgumentError, 'Invalid phone number!' unless phone.nil? || Student.validate_phone?(phone)
     @phone = phone
+  end
+
+  public
+  attr_reader :id, :git
+  def initialize(id: nil, phone:nil, telegram: nil, email: nil, git:nil )
+    self.id=id
+    set_contacts(**{telegram:telegram, phone: phone, email:email})
   end
 
   #проверка на номер

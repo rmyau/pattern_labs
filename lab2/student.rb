@@ -4,7 +4,7 @@ class Student<BaseStudent
   public_class_method :new
   attr_reader :first_name, :second_name, :last_name
   #открываем сеттеры и геттеры из базового класса
-  public :phone, :telegram, :email, 'id=', 'phone=', 'telegram=', 'email=', 'git='
+  public :phone, :telegram, :email, 'id=', 'phone=', 'telegram=', 'email=', 'git=', :set_contacts
   def initialize(last_name: nil, first_name: nil, second_name: nil, id: nil, phone:nil, telegram: nil, email: nil, git:nil)
     raise ArgumentError, "Required fields: first_name, second_name and last_name!" if first_name.nil? || second_name.nil?|| last_name.nil?
     self.last_name=last_name
@@ -46,6 +46,7 @@ class Student<BaseStudent
   def get_info
     "#{short_name}, #{find_git}, #{find_contact}"
   end
+
   def to_s
     res = "#{last_name} #{first_name} #{second_name}"
     res += " id=#{id}" unless id.nil?

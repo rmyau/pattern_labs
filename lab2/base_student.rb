@@ -26,7 +26,14 @@ class BaseStudent
     @phone = phone
   end
 
+  def set_contacts(email:nil, phone:nil, telegram:nil)
+    self.email = email
+    self.phone = phone
+    self.telegram = telegram
+  end
+
   public
+
   attr_reader :id, :git
   def initialize(id: nil, phone:nil, telegram: nil, email: nil, git:nil )
     self.id=id
@@ -79,11 +86,7 @@ class BaseStudent
     "контактов для связи нет"
   end
 
-  def set_contacts(email:nil, phone:nil, telegram:nil)
-    self.email = email
-    self.phone = phone
-    self.telegram = telegram
-  end
+
 
 
 end

@@ -44,14 +44,16 @@ class Student<BaseStudent
     "#{last_name} #{first_name[0]}. #{second_name[0]}."
   end
   def get_info
-    "#{short_name}, #{find_git}, #{find_contact}"
+    git_info = " git=#{git}" unless git.nil?
+    contact_info = "#{find_contact}" unless find_contact.nil?
+    "#{short_name} #{git_info} #{contact_info}"
   end
 
   def to_s
     res = "#{last_name} #{first_name} #{second_name}"
     res += " id=#{id}" unless id.nil?
     res += " phone=#{phone}" unless phone.nil?
-    res += " #{find_git}"
+    res += " git=#{git}" unless git.nil?
     res += " telegram=#{telegram}" unless telegram.nil?
     res += " email=#{email}" unless email.nil?
     res

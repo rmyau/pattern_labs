@@ -22,7 +22,7 @@ class StudentShort<BaseStudent
     result = short_name
     result += " id=#{id} " unless id.nil?
     result += " #{find_contact}"
-    result+= "  #{find_git}"
+    result+= "  git=#{git}" unless git.nil?
     result
   end
 end

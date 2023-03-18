@@ -67,14 +67,6 @@ class BaseStudent
     git? && exist_contact?
   end
 
-  #строка для вывода гита
-  def find_git
-    if git?
-      "git=#{git}"
-    else
-      "git: отсутствует"
-    end
-  end
 
   #строка для вывода любого одного контакта
   def find_contact
@@ -83,7 +75,7 @@ class BaseStudent
       return "telegram: #{telegram}" unless telegram.nil?
       return "email: #{email}" unless email.nil?
     end
-    "контактов для связи нет"
+    nil
   end
 
 

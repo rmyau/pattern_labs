@@ -16,7 +16,7 @@ require_relative 'student_short'
 st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
 st3.set_contacts(**{phone: '89621294567'})
 puts st3
-
+puts st3.get_info
 #
 st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
 

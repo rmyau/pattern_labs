@@ -1,5 +1,5 @@
-require_relative 'student'
-require_relative 'student_short'
+require_relative 'student_model/student'
+require_relative 'student_model/student_short'
 
 # st0=Student.new(**{first_name: "Александр",second_name: "Сергеевич",last_name: 'Кукушкин',id:3, phone:'89231432112'})
 # puts st0

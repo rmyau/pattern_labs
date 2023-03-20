@@ -1,5 +1,6 @@
 require_relative 'student_model/student'
 require_relative 'student_model/student_short'
+require_relative 'data_table'
 
 # st0=Student.new(**{first_name: "Александр",second_name: "Сергеевич",last_name: 'Кукушкин',id:3, phone:'89231432112'})
 # puts st0
@@ -12,18 +13,18 @@ require_relative 'student_model/student_short'
 # puts st2.validate?
 # puts st2.short_name
 # puts st1.get_info
+# #
+# st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
+# st3.set_contacts(**{phone: '89621294567'})
+# puts st3
+# puts st3.get_info
+# #
+# st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
 #
-st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
-st3.set_contacts(**{phone: '89621294567'})
-puts st3
-puts st3.get_info
+# puts st_sh1
 #
-st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
-
-puts st_sh1
-
-st_sh2=StudentShort.init_from_student(st3)
-puts st_sh2
+# st_sh2=StudentShort.init_from_student(st3)
+# puts st_sh2
 
 def read_from_txt(file_path)
   raise ArgumentError, 'File not found' unless File.exist?(file_path)
@@ -45,13 +46,16 @@ def write_to_txt(file_path, student_list)
   res = res.chop + "]"
   File.write(file_path, res)
 end
+#
+# puts '------------test read'
+# st_list=read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_info.txt')
+# st_list.each do |st|
+#   puts st.get_info
+# end
+# puts '-------- test write'
+# write_to_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt',st_list)
+# puts read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt')
 
-puts '------------test read'
-st_list=read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_info.txt')
-st_list.each do |st|
-  puts st.get_info
-end
-puts '-------- test write'
-write_to_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt',st_list)
-puts read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt')
-
+dt=DataTable.new([[3,4],[1,2,3]])
+puts dt.row_number, dt.column_number
+puts 'yes ' if dt.get_item(0,2).nil?

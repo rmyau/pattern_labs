@@ -73,3 +73,4 @@ st_sh2=StudentShort.init_from_student(st3)
 # puts st_sh2
 dlsh= DataListStudentShort.new([st_sh1, st_sh2])
 puts dlsh.get_data
+puts dlsh.get_names

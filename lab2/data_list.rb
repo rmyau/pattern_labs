@@ -1,4 +1,4 @@
-
+require_relative 'data_table'
 class DataList
   private_class_method :new
   attr_reader :obj_list
@@ -18,9 +18,25 @@ class DataList
 
   def get_names; end
 
-  def get_data; end
+  #получение таблицы
+  # Паттерн Шаблон
+  def get_data
+    id=0
+    dt = obj_list.inject([]) do |res, object|
+      row=[id]
+      row.append(*get_fields(object))
+      id+=1
+      res<<row
+    end
+    DataTable.new(dt)
+  end
+
 
   protected
   attr_writer :obj_list
   attr_accessor :selected_items
+
+  def get_fields(object)
+    []
+  end
 end

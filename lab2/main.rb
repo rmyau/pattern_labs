@@ -1,6 +1,7 @@
 require_relative 'student_model/student'
 require_relative 'student_model/student_short'
 require_relative 'data_table'
+require_relative 'data_list_student_short'
 
 # st0=Student.new(**{first_name: "Александр",second_name: "Сергеевич",last_name: 'Кукушкин',id:3, phone:'89231432112'})
 # puts st0
@@ -59,3 +60,16 @@ end
 dt=DataTable.new([[3,4],[1,2,3]])
 puts dt.row_number, dt.column_number
 puts 'yes ' if dt.get_item(0,2).nil?
+
+st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
+st3.set_contacts(**{phone: '89621294567'})
+# puts st3
+#
+st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
+
+# puts st_sh1
+
+st_sh2=StudentShort.init_from_student(st3)
+# puts st_sh2
+dlsh= DataListStudentShort.new([st_sh1, st_sh2])
+puts dlsh.get_data

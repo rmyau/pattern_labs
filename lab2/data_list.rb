@@ -1,7 +1,7 @@
 require_relative 'data_table'
 class DataList
   private_class_method :new
-  attr_reader :obj_list
+  attr_writer :obj_list
   def initialize(obj_list)
     self.obj_list=obj_list
     self.selected_items=[]
@@ -21,11 +21,11 @@ class DataList
   #получение таблицы
   # Паттерн Шаблон
   def get_data
-    id=0
+    index_id=0
     dt = obj_list.inject([]) do |res, object|
-      row=[id]
+      row=[index_id]
       row.append(*get_fields(object))
-      id+=1
+      index_id+=1
       res<<row
     end
     DataTable.new(dt)
@@ -33,7 +33,7 @@ class DataList
 
 
   protected
-  attr_writer :obj_list
+  attr_reader :obj_list
   attr_accessor :selected_items
 
   def get_fields(object)

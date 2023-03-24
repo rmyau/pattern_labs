@@ -11,11 +11,15 @@ class DataList
   def select(*numbers)
     selected_items.append(*numbers)
   end
+
   #массив id выделенных элементов
   def get_select
     obj_list[selected_items].id
   end
 
+  protected
+  attr_reader :obj_list
+  attr_accessor :selected_items
   def get_names; end
 
   #получение таблицы
@@ -30,11 +34,6 @@ class DataList
     end
     DataTable.new(dt)
   end
-
-
-  protected
-  attr_reader :obj_list
-  attr_accessor :selected_items
 
   def get_fields(object)
     []

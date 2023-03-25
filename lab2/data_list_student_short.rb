@@ -11,12 +11,12 @@ class DataListStudentShort<DataList
 
   #получение массива наименования аттрибутов
   def get_names
-    %w[id short_name git find_contact]
+    %w[№ short_name git find_contact]
   end
 
   protected
   def get_fields(object)
-    [object.id, object.short_name, object.git, object.find_contact]
+    [object.short_name, object.git, object.find_contact]
   end
 end
 

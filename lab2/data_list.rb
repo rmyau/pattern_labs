@@ -31,6 +31,7 @@ class DataList
     end
     DataTable.new(dt)
   end
+
   protected
   attr_reader :obj_list
   attr_accessor :selected_items

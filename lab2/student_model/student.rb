@@ -67,9 +67,7 @@ class Student<BaseStudent
     info_hash
   end
 
-  def to_json_str
-    JSON.generate(to_hash)
-  end
+
 
 end
 

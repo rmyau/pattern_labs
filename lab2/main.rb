@@ -48,29 +48,30 @@ def write_to_txt(file_path, student_list)
   File.write(file_path, res)
 end
 #
-# puts '------------test read'
-# st_list=read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_info.txt')
-# st_list.each do |st|
-#   puts st.get_info
-# end
+puts '------------test read'
+st_list=read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_info.txt')
+st_list.each do |st|
+  puts st.get_info
+end
 # puts '-------- test write'
 # write_to_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt',st_list)
 # puts read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt')
 
-dt=DataTable.new([[3,4],[1,2,3]])
-puts dt.row_number, dt.column_number
-puts 'yes ' if dt.get_item(0,2).nil?
-
-st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
-st3.set_contacts(**{phone: '89621294567'})
-# puts st3
+# dt=DataTable.new([[3,4],[1,2,3]])
+# puts dt.row_number, dt.column_number
+# puts 'yes ' if dt.get_item(0,2).nil?
 #
-st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
+# st3=Student.from_json_str('{"first_name":"Максим", "second_name": "Олегович", "last_name": "Арабов"}')
+# st3.set_contacts(**{phone: '89621294567'})
+# # puts st3
+# #
+# st_sh1=StudentShort.new(5,'{"short_name": "Разумов Г.В.", "git": "@rasdva"}')
+#
+# # puts st_sh1
+#
+# st_sh2=StudentShort.init_from_student(st3)
+# # puts st_sh2
+# dlsh= DataListStudentShort.new([st_sh1, st_sh2])
+# puts dlsh.get_data
+# puts dlsh.get_names
 
-# puts st_sh1
-
-st_sh2=StudentShort.init_from_student(st3)
-# puts st_sh2
-dlsh= DataListStudentShort.new([st_sh1, st_sh2])
-puts dlsh.get_data
-puts dlsh.get_names

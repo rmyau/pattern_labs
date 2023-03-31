@@ -1,0 +1,11 @@
+---
+- last_name: Иванов
+  first_name: Иван
+  second_name: Иванович
+  email: ivansuper12@mail.ru
+  id: 1
+- last_name: Кукушкин
+  first_name: Александр
+  second_name: Сергеевич
+  phone: "89123546789"
+  id: 2

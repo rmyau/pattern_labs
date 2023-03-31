@@ -1,8 +1,8 @@
-require_relative 'base_student_list'
+require_relative 'student_list_strategy'
 require 'json'
-class StudentListJson<BaseStudentList
+class StudentListJson<StudentListStrategy
   public_class_method :new
-  private
+
   #получение массива хэшей из строки
   def list_hash_from_str(str)
     JSON.parse(str,  {symbolize_names: true })

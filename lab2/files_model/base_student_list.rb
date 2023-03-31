@@ -1,16 +1,17 @@
 require_relative '../student_model/student'
 require_relative '../student_model/student_short'
 require_relative '../data_list'
+require_relative 'student_list_yaml'
 class BaseStudentList
-  private_class_method :new
-  def initialize
+  def initialize(type_class)
     self.students = []
+    self.type_class = type_class
   end
 
   #чтение из файла
   def read_file(file_path)
     raise ArgumentError, 'File not found' unless File.exist?(file_path)
-    list_hash = list_hash_from_str(File.read(file_path))
+    list_hash = type_class.list_hash_from_str(File.read(file_path))
     self.students = list_hash.map {|st| Student.new(**st)}
     # get_new_student_id
   end
@@ -18,7 +19,7 @@ class BaseStudentList
   #запись в файл
   def write_to_file(file_path)
     list_hash = students.map(&:to_hash)
-    File.write(file_path, list_hash_to_str(list_hash))
+    File.write(file_path, type_class.list_hash_to_str(list_hash))
   end
 
   #получить объект Student по id
@@ -61,15 +62,9 @@ class BaseStudentList
     students.size
   end
 
-  protected
-  #получение массива хэшей из строки
-  def list_hash_from_str(str); end
-
-  #получение строки заданного вида из массива хэшей
-  def list_hash_to_str(list_hash); end
 
   private
-  attr_accessor :students
+  attr_accessor :students, :type_class
 
   #получение нового id для студента
   def get_new_student_id

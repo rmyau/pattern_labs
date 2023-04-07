@@ -1,6 +1,6 @@
 require_relative 'student_model/student'
 require_relative 'student_model/student_short'
-require_relative 'data_table'
+require_relative 'data_list_model/data_table'
 require_relative 'data_list_student_short'
 
 # st0=Student.new(**{first_name: "Александр",second_name: "Сергеевич",last_name: 'Кукушкин',id:3, phone:'89231432112'})

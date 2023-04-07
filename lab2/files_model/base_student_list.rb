@@ -1,6 +1,6 @@
 require_relative '../student_model/student'
 require_relative '../student_model/student_short'
-require_relative '../data_list'
+require_relative '../data_list_model/data_list'
 require_relative 'student_list_yaml'
 class BaseStudentList
   attr_writer :type_class

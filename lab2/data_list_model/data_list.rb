@@ -1,4 +1,4 @@
-require_relative 'data_table'
+require_relative '../a_table'
 class DataList
   private_class_method :new
   attr_writer :obj_list

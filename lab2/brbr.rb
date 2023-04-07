@@ -20,10 +20,9 @@ list=[1,2,3]
 # a.write_to_file("C:/Users/katya/Desktop/ruby_lab/lab2/student_list_out.json")
 #
 
+a_js = BaseStudentList.new(StudentListJson.new)
 
-a = BaseStudentList.new(StudentListYaml.new)
-a.read_file("C:/Users/katya/Desktop/ruby_lab/lab2/test_data/student_list.yaml")
-# puts a.students
-# a.sorted_by_name
-a.write_to_file("C:/Users/katya/Desktop/ruby_lab/lab2/test_data/student_list_out.yaml")
+a_js.read_file("./lab2/test_data/student_list.json")
+a_js.type_class=StudentListYaml.new
+a_js.write_to_file("./lab2/test_data/student_list_out.yaml")
 

@@ -3,6 +3,7 @@ require_relative '../student_model/student_short'
 require_relative '../data_list'
 require_relative 'student_list_yaml'
 class BaseStudentList
+  attr_writer :type_class
   def initialize(type_class)
     self.students = []
     self.type_class = type_class
@@ -64,7 +65,8 @@ class BaseStudentList
 
 
   private
-  attr_accessor :students, :type_class
+  attr_accessor :students
+  attr_reader :type_class
 
   #получение нового id для студента
   def get_new_student_id

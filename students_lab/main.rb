@@ -54,8 +54,8 @@ st_list.each do |st|
   puts st.get_info
 end
 # puts '-------- test write'
-# write_to_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt',st_list)
-# puts read_from_txt('C:\Users\katya\Desktop\ruby_lab\lab2\students_out.txt')
+# write_to_txt('C:\Users\katya\Desktop\ruby_lab\students_lab\students_out.txt',st_list)
+# puts read_from_txt('C:\Users\katya\Desktop\ruby_lab\students_lab\students_out.txt')
 
 # dt=DataTable.new([[3,4],[1,2,3]])
 # puts dt.row_number, dt.column_number

@@ -1,12 +1,12 @@
 require_relative '../student_model/student'
 require_relative '../student_model/student_short'
 require_relative '../data_list_model/data_list_student_short'
+require_relative 'db_students'
 class StudentListDB
 
   #стандартный коструктор
-  def initialize(db_file_path)
-    self.db = SQLite3::Database.open db_file_path
-    db.results_as_hash=true
+  def initialize
+    self.db = StudentDB.instance
   end
 
   # получить студента по id

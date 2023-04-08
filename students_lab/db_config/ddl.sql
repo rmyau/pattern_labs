@@ -8,3 +8,4 @@ create table students (
   email       varchar(32) null,
   git         varchar(32) null
 );
+

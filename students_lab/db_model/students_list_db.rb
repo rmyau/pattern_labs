@@ -6,7 +6,7 @@ class StudentListDB
 
   #стандартный коструктор
   def initialize
-    self.db = StudentDB.instance
+    self.db = DB.instance
   end
 
   # получить студента по id
@@ -56,3 +56,5 @@ class StudentListDB
     [student.first_name, student.last_name,  student.second_name, student.phone, student.telegram, student.email, student.git]
   end
 end
+
+

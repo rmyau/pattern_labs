@@ -61,3 +61,5 @@ st2 = Student.new(**{first_name: "Карина", second_name: "Кареновн�
 # puts db.student_count
 
 
+
+

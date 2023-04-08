@@ -1,5 +1,5 @@
 require 'sqlite3'
-class StudentDB
+class DB
   private_class_method :new
   @@instance = nil
   def initialize
@@ -9,7 +9,7 @@ class StudentDB
 
   def self.instance
     if @@instance.nil?
-      @@instance=StudentDB.new
+      @@instance=new
     end
     @@instance
   end

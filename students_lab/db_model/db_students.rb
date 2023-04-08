@@ -1,7 +1,8 @@
 require 'sqlite3'
 class StudentDB
+  private_class_method :new
   @@instance = nil
-  private def initialize
+  def initialize
     @db = SQLite3::Database.open 'C:\Users\katya\Desktop\ruby_lab\db_student.sql'
     @db.results_as_hash=true
   end

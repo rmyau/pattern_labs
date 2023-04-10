@@ -1,5 +1,5 @@
-require_relative '../student_model/el/student'
-require_relative '../student_model/student_short'
+require_relative '../../student_model/student'
+require_relative '../../student_model/student_short'
 require_relative '../data_list_model/data_list_student_short'
 require_relative 'db_students'
 class StudentListDB

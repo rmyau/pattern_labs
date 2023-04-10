@@ -1,7 +1,6 @@
 require_relative '../../student_model/student'
 require_relative '../../student_model/student_short'
-require_relative '../data_list_model/data_list'
-require_relative 'student_list_yaml'
+require_relative '../data_list_model/data_list_student_short'
 class BaseStudentList
   attr_writer :type_class
   def initialize(type_class)
@@ -31,9 +30,10 @@ class BaseStudentList
   #полуение n элементов page страницы
   def get_k_n_student_short_list(page, n, data_list:nil)
     page_list = students[(page-1)*n, n].map{|st| StudentShort.init_from_student(st)}
-    return DataList.new(page_list) if data_list.nil?
+    return DataListStudentShort.new(page_list) if data_list.nil?
 
-    data_list.append(page_list)
+    data_list.replace_objects(page)
+    data_list
   end
 
   #сортировка по фамилии и инициалам

@@ -32,6 +32,10 @@ class DataList
     DataTable.new(dt)
   end
 
+  def replace_objects(obj_list)
+    self.obj_list=obj_list.dup
+  end
+
   protected
   attr_reader :obj_list
   attr_accessor :selected_items

@@ -41,11 +41,14 @@ class StudentListDB
   end
 
   #полуение n элементов page страницы
-  def get_k_n_student_short_list(page,n)
+  def get_k_n_student_short_list(page,n,data_list:nil)
     students = db.execute('SELECT * FROM students LIMIT ? OFFSET ?',(page-1)*n,n)
     slice = students.map{|st| StudentShort.init_from_student(Student.new(**st.transform_keys(&:to_sym)))}
 
-    DataListStudentShort.new(slice)
+    return DataListStudentShort.new(slice) if data_list.nil?
+
+    data_list.replace_objects(page)
+    data_list
   end
 
   private

@@ -44,21 +44,23 @@ require_relative 'student_list_models/data_list_model/data_table'
 # puts dlsh.get_data
 # puts dlsh.get_names
 
-def student_fields(student)
-  [student.first_name, student.last_name,  student.second_name, student.phone, student.telegram, student.email, student.git]
-end
-require 'sqlite3'
-
-require_relative 'student_list_models/db_model/students_list_db'
-
-
-db=StudentListDB.new
+# def student_fields(student)
+#   [student.first_name, student.last_name,  student.second_name, student.phone, student.telegram, student.email, student.git]
+# end
+# require 'sqlite3'
+#
+# require_relative 'student_list_models/db_model/db_list_adapter'
+#
+#
+# db=StudentListDB.new
 
 st2 = Student.new(**{first_name: "Карина", second_name: "Кареновна",last_name: "Краснова", email: "bubu_bla@yandex.ru"})
 # db.add_student(st2)
 # puts db.get_student_by_id(2)
 # puts db.get_k_n_student_short_list(2,2)
 # puts db.student_count
+
+
 
 
 

@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem 'sqlite3'
-
+# gem 'sqlite3'
+gem 'fxruby'
 
 # gem "rails"

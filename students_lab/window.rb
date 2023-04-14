@@ -113,6 +113,23 @@ class Window<FXMainWindow
     table.setColumnWidth(1, 150)
     table.setColumnWidth(2, 200)
 
+    table.getColumnHeader.connect(SEL_COMMAND) do |a, b,col|
+      sort_table_by_column(table,0)
+    end
+  end
+
+  #сортировка таблицы по столбцу
+  def sort_table_by_column(table, column_index)
+
+    table_data = (0...table.getNumRows()).map { |row_index| (0...table.getNumColumns()).map { |col_index| table.getItemText(row_index, col_index) } }
+
+    sorted_table_data = table_data.sort_by { |row_data| row_data[column_index] }
+
+    sorted_table_data.each_with_index do |row_data, row_index|
+      row_data.each_with_index do |cell_data, col_index|
+        table.setItemText(row_index, col_index, cell_data)
+      end
+    end
   end
 
   def create_radio_group(field, parent)

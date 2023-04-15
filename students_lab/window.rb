@@ -3,7 +3,7 @@ require 'fox16'
 include Fox
 class Window<FXMainWindow
   def initialize(app)
-    super(app, "Students" , :width => 500, :height => 300)
+    super(app, "Students" , :width => 1050, :height => 400)
 
     tab_book = FXTabBook.new(self, nil, 0, LAYOUT_FILL_X||LAYOUT_FILL_Y)
     # Создаем первую вкладку
@@ -11,7 +11,9 @@ class Window<FXMainWindow
     composite1 = FXComposite.new(tab_book, LAYOUT_FILL_X||LAYOUT_FILL_Y)
     @first_tab = FXHorizontalFrame.new(composite1)
     @first_tab.resize(1000,1000)
+    @count_page = 3
     first_tab
+
 
     # Создаем вторую вкладку
     tab2 = FXTabItem.new(tab_book, "Вкладка 2", nil)
@@ -28,6 +30,7 @@ class Window<FXMainWindow
 
   private
   def first_tab
+
     add_filters
     add_table
 
@@ -51,20 +54,26 @@ class Window<FXMainWindow
   end
 
   def add_table
+    table_frame = FXVerticalFrame.new(@first_tab)
+    #отображение страниц
+    change_page = FXHorizontalFrame.new(table_frame, :opts=> LAYOUT_CENTER_X)
+    btn_back=FXButton.new(change_page, "Назад", :opts=> BUTTON_INITIAL)
+    btn_back.textColor = Fox.FXRGB(0,23,175)
+    #добавить отображение со страницы, на которой мы сейчас
+    res=Array(1..@count_page).join(',')
+    page_label = FXLabel.new(change_page, res)
+    btn_next=FXButton.new(change_page, "Далее", :opts=> BUTTON_INITIAL)
+    btn_next.textColor = Fox.FXRGB(0,23,175)
+
 
     # Создаем таблицу
-    table = FXTable.new(@first_tab, :opts =>  TABLE_READONLY|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT, :width=>580, :height=>220)
+    table = FXTable.new(table_frame, :opts =>  TABLE_READONLY|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT|TABLE_COL_SIZABLE|TABLE_ROW_RENUMBER, :width=>580, :height=>320)
     table.setTableSize(10, 3)
 
     table.setColumnText(0, "ФИО")
     table.setColumnText(1, "Git")
     table.setColumnText(2, "Контакт")
 
-    (1..10).each { |num| table.setRowText(num-1, num.to_s) }
-
-    table.setColumnText(0, "Имя")
-    table.setColumnText(1, "Твиттер")
-    table.setColumnText(2, "Email")
 
     # Заполняем таблицу данными
     table.setItemText(0, 0, "John")
@@ -116,11 +125,15 @@ class Window<FXMainWindow
     table.getColumnHeader.connect(SEL_COMMAND) do |a, b,col|
       sort_table_by_column(table,0)
     end
+
+    change_page.connect(SEL_COMMAND) do
+      table.killSelection
+    end
   end
 
   #сортировка таблицы по столбцу
   def sort_table_by_column(table, column_index)
-
+    #ере
     table_data = (0...table.getNumRows()).map { |row_index| (0...table.getNumColumns()).map { |col_index| table.getItemText(row_index, col_index) } }
 
     sorted_table_data = table_data.sort_by { |row_data| row_data[column_index] }

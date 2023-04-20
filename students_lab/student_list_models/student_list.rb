@@ -31,7 +31,7 @@ class StudentList
   end
 
   #полуение n элементов page страницы
-  def get_k_n_student_short_list(page,n)
-    @data_adapter.get_k_n_student_short_list(page,n)
+  def get_k_n_student_short_list(page,n, data_list)
+    @data_adapter.get_k_n_student_short_list(page,n, data_list)
   end
 end

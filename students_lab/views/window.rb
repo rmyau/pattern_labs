@@ -8,15 +8,18 @@ class Window<FXMainWindow
     super(app, "Students" , :width => 1050, :height => 430)
 
     @students_on_page=15
+    @current_page=1
+    @count_student=0
     @controller = StudentListController.new(self)
-
+    create_tabs
+  end
+  def create_tabs
     tab_book = FXTabBook.new(self, :opts=>LAYOUT_FILL_X|LAYOUT_FILL_Y)
     # Создаем первую вкладку
     tab1 = FXTabItem.new(tab_book, "Вкладка 1", nil)
     composite1 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
     @first_tab = FXHorizontalFrame.new(composite1)
     @first_tab.resize(1000,1000)
-    @count_page = 3
     first_tab
 
     # Создаем вторую вкладку
@@ -25,13 +28,19 @@ class Window<FXMainWindow
 
     tab3 = FXTabItem.new(tab_book, "Вкладка 3", nil)
     @composite3 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
-
   end
   def create
     super
     show
+    @controller.on_view_create
+    @controller.refresh_data(@current_page, @students_on_page)
   end
 
+  def update_count_students(count_students)
+    @count_student = count_students
+    #изменить отображение страниц
+
+  end
   private
   def first_tab
     add_filters

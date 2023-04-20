@@ -1,19 +1,23 @@
 # frozen_string_literal: true
 require 'fox16'
 include Fox
+require_relative '../controller/student_list_controller'
 class Window<FXMainWindow
   def initialize(app)
-    super(app, "Students" , :width => 1050, :height => 400)
 
-    tab_book = FXTabBook.new(self, nil, 0, LAYOUT_FILL_X||LAYOUT_FILL_Y)
+    super(app, "Students" , :width => 1050, :height => 430)
+
+    @students_on_page=15
+    @controller = StudentListController.new(self)
+
+    tab_book = FXTabBook.new(self, :opts=>LAYOUT_FILL_X|LAYOUT_FILL_Y)
     # Создаем первую вкладку
     tab1 = FXTabItem.new(tab_book, "Вкладка 1", nil)
-    composite1 = FXComposite.new(tab_book, LAYOUT_FILL_X||LAYOUT_FILL_Y)
+    composite1 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
     @first_tab = FXHorizontalFrame.new(composite1)
     @first_tab.resize(1000,1000)
     @count_page = 3
     first_tab
-
 
     # Создаем вторую вкладку
     tab2 = FXTabItem.new(tab_book, "Вкладка 2", nil)
@@ -25,36 +29,37 @@ class Window<FXMainWindow
   end
   def create
     super
-    show(PLACEMENT_SCREEN)
+    show
   end
 
   private
   def first_tab
-
     add_filters
     add_table
-
   end
 
   def add_filters
     #filter
-    @frame_filter = FXVerticalFrame.new(@first_tab)
-    @frame_filter.resize(500,300)
+    frame_filter = FXVerticalFrame.new(@first_tab, :padTop=>50)
+    frame_filter.resize(500,300)
 
     field_filter =[[:git, 'Гит'], [:email, 'Почта'], [:phone, 'Телефон'], [:telegram, 'Телеграм']]
     #ФИЛЬТР ИМЕНИ
-    nameLabel = FXLabel.new(@frame_filter, "Фамилия и инициалы")
-    nameTextField = FXTextField.new(@frame_filter, 40)
+    nameLabel = FXLabel.new(frame_filter, "Фамилия и инициалы")
+    nameTextField = FXTextField.new(frame_filter, 40)
     @filter = {short_name: nameTextField}
 
     #фильтрация для остальных полей
     field_filter.each do |field|
-      @filter[field[0]] = create_radio_group(field, @frame_filter)
+      @filter[field[0]] = create_radio_group(field, frame_filter)
     end
+
+    #кнопка очистить
+    btn_clear = FXButton.new(frame_filter, "Очистить", :opts=>BUTTON_NORMAL)
   end
 
   def add_table
-    table_frame = FXVerticalFrame.new(@first_tab)
+    table_frame = FXVerticalFrame.new(@first_tab, :padLeft=>20)
     #отображение страниц
     change_page = FXHorizontalFrame.new(table_frame, :opts=> LAYOUT_CENTER_X)
     btn_back=FXButton.new(change_page, "Назад", :opts=> BUTTON_INITIAL)
@@ -80,55 +85,51 @@ class Window<FXMainWindow
     table.setItemText(0, 1, "@jo")
     table.setItemText(0, 2, "john@example.com")
 
-    table.setItemText(1, 0, "Jane")
-    table.setItemText(1, 1, "@frfff")
-    table.setItemText(1, 2, "jane@example.com")
 
-    table.setItemText(2, 0, "Bob")
-    table.setItemText(2, 1, "@bob")
-    table.setItemText(2, 2, "bob@example.com")
-
-    table.setItemText(3, 0, "Alice")
-    table.setItemText(3, 1, "@alice")
-    table.setItemText(3, 2, "alice@example.com")
-
-    table.setItemText(4, 0, "Mike")
-    table.setItemText(4, 1, "@mike")
-    table.setItemText(4, 2, "mike@example.com")
-
-    table.setItemText(5, 0, "Sara")
-    table.setItemText(5, 1, "@sara")
-    table.setItemText(5, 2, "sara@example.com")
-
-    table.setItemText(6, 0, "Tom")
-    table.setItemText(6, 1, "@tom")
-    table.setItemText(6, 2, "tom@example.com")
-
-    table.setItemText(7, 0, "Emily")
-    table.setItemText(7, 1, "@emily")
-    table.setItemText(7, 2, "emily@example.com")
-
-    table.setItemText(8, 0, "Max")
-    table.setItemText(8, 1, "@max")
-    table.setItemText(8, 2, "max@example.com")
-
-    table.setItemText(9, 0, "Lucy")
-    table.setItemText(9, 1, "@lucy")
-    table.setItemText(9, 2, "lucy@example.com")
 
     # Масштабируем таблицу
-    table.setRowHeaderWidth(50)
+    table.setRowHeaderWidth(30)
     table.setColumnWidth(0, 150)
     table.setColumnWidth(1, 150)
     table.setColumnWidth(2, 200)
 
-    table.getColumnHeader.connect(SEL_COMMAND) do |a, b,col|
-      sort_table_by_column(table,0)
+
+    #добавление кнопок
+    btn_list = FXHorizontalFrame.new(table_frame)
+    btn_add = FXButton.new(btn_list, "Добавить", :opts=>BUTTON_NORMAL)
+    btn_update = FXButton.new(btn_list, "Обновить", :opts=>BUTTON_NORMAL)
+    btn_change = FXButton.new(btn_list, "Изменить", :opts=>BUTTON_NORMAL)
+    btn_delete = FXButton.new(btn_list, "Удалить", :opts=>BUTTON_NORMAL)
+
+    btn_change.disable
+    btn_delete.disable
+
+    # Устанавливаем обработчик события SEL_CHANGED для таблицы
+    table.connect(SEL_CHANGED) do
+      num_selected_rows = 0
+      (0...table.getNumRows()).each { |row_index| num_selected_rows+=1 if table.rowSelected?(row_index)}
+
+      # Если выделена только одна строка, кнопка должна быть неактивной
+      if num_selected_rows == 1
+        btn_change.enable
+        btn_delete.enable
+        # Если выделено несколько строк, кнопка должна быть активной
+      elsif num_selected_rows >1
+        btn_change.disable
+        btn_delete.enable
+      end
     end
 
-    change_page.connect(SEL_COMMAND) do
-      table.killSelection
+    table.getColumnHeader.connect(SEL_COMMAND) do |a, b,col|
+      sort_table_by_column(table,col)
     end
+
+    table.getRowHeader.connect(SEL_RIGHTBUTTONPRESS) do
+      table.killSelection(true)
+      btn_change.disable
+      btn_delete.disable
+    end
+
   end
 
   #сортировка таблицы по столбцу
@@ -188,9 +189,5 @@ class Window<FXMainWindow
 
 end
 
-app = FXApp.new
-Window.new(app)
-app.create
-app.run
 
 

@@ -1,7 +1,7 @@
 require_relative 'student_model/student'
 require_relative 'student_model/student_short'
 require_relative 'student_list_models/data_list_model/data_table'
-
+require_relative 'views/window'
 
 # st0=Student.new(**{first_name: "Александр",second_name: "Сергеевич",last_name: 'Кукушкин',id:3, phone:'89231432112'})
 # puts st0
@@ -54,11 +54,12 @@ require_relative 'student_list_models/data_list_model/data_table'
 #
 # db=StudentListDB.new
 
-st2 = Student.new(**{first_name: "Карина", second_name: "Кареновна",last_name: "Краснова", email: "bubu_bla@yandex.ru"})
-# db.add_student(st2)
-# puts db.get_student_by_id(2)
-# puts db.get_k_n_student_short_list(2,2)
-# puts db.student_count
+# st2 = Student.new(**{first_name: "Карина", second_name: "Кареновна",last_name: "Краснова", email: "bubu_bla@yandex.ru"})
+
+app = FXApp.new
+Window.new(app)
+# app.create
+# app.run
 
 
 

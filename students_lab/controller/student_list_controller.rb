@@ -7,6 +7,7 @@ class StudentListController
   def initialize(view)
     @view = view
     @data_list = DataListStudentShort.new([])
+    @data_list.add_observer(@view)
   end
 
   def on_view_create

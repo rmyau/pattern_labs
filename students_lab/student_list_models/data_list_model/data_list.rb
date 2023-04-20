@@ -5,8 +5,17 @@ class DataList
   def initialize(obj_list)
     self.obj_list=obj_list
     self.selected_items=[]
+    @observers = []
   end
 
+  #добавление наблюдателя
+  def add_observer(observer)
+    @observers.append(observer)
+  end
+
+  def notify
+    @observers.each { |observer| observer.on_datalist_changed(get_data) }
+  end
   #выделение элементов по номеру
   def select(*numbers)
     selected_items.append(*numbers)

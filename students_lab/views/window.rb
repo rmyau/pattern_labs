@@ -39,7 +39,14 @@ class Window<FXMainWindow
   def update_count_students(count_students)
     @count_student = count_students
     #изменить отображение страниц
+  end
 
+  def on_datalist_changed(table)
+    row_number=0
+    table.each do |row|
+      row_number+=1
+      (1..3).each { |index_field| @table.setItemText(row_number, index_field-1, row[index_field])  }
+    end
   end
   private
   def first_tab
@@ -81,26 +88,19 @@ class Window<FXMainWindow
 
 
     # Создаем таблицу
-    table = FXTable.new(table_frame, :opts =>  TABLE_READONLY|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT|TABLE_COL_SIZABLE|TABLE_ROW_RENUMBER, :width=>580, :height=>320)
-    table.setTableSize(10, 3)
+    @table = FXTable.new(table_frame, :opts =>  TABLE_READONLY|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT|TABLE_COL_SIZABLE|TABLE_ROW_RENUMBER, :width=>580, :height=>320)
+    @table.setTableSize(10, 3)
 
-    table.setColumnText(0, "ФИО")
-    table.setColumnText(1, "Git")
-    table.setColumnText(2, "Контакт")
-
-
-    # Заполняем таблицу данными
-    table.setItemText(0, 0, "John")
-    table.setItemText(0, 1, "@jo")
-    table.setItemText(0, 2, "john@example.com")
-
+    @table.setColumnText(0, "ФИО")
+    @table.setColumnText(1, "Git")
+    @table.setColumnText(2, "Контакт")
 
 
     # Масштабируем таблицу
-    table.setRowHeaderWidth(30)
-    table.setColumnWidth(0, 150)
-    table.setColumnWidth(1, 150)
-    table.setColumnWidth(2, 200)
+    @table.setRowHeaderWidth(30)
+    @table.setColumnWidth(0, 150)
+    @table.setColumnWidth(1, 150)
+    @table.setColumnWidth(2, 200)
 
 
     #добавление кнопок
@@ -114,9 +114,9 @@ class Window<FXMainWindow
     btn_delete.disable
 
     # Устанавливаем обработчик события SEL_CHANGED для таблицы
-    table.connect(SEL_CHANGED) do
+    @table.connect(SEL_CHANGED) do
       num_selected_rows = 0
-      (0...table.getNumRows()).each { |row_index| num_selected_rows+=1 if table.rowSelected?(row_index)}
+      (0...@table.getNumRows()).each { |row_index| num_selected_rows+=1 if @table.rowSelected?(row_index)}
 
       # Если выделена только одна строка, кнопка должна быть неактивной
       if num_selected_rows == 1
@@ -129,12 +129,12 @@ class Window<FXMainWindow
       end
     end
 
-    table.getColumnHeader.connect(SEL_COMMAND) do |a, b,col|
-      sort_table_by_column(table,col)
+    @table.getColumnHeader.connect(SEL_COMMAND) do |a, b,col|
+      sort_table_by_column(@table,col)
     end
 
-    table.getRowHeader.connect(SEL_RIGHTBUTTONPRESS) do
-      table.killSelection(true)
+    @table.getRowHeader.connect(SEL_RIGHTBUTTONPRESS) do
+      @table.killSelection(true)
       btn_change.disable
       btn_delete.disable
     end

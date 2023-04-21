@@ -5,12 +5,18 @@ class DataTable
     self.row_number = table.size
     self.column_number = max_size_column
   end
-  attr_reader :row_number, :column_number
+  attr_reader :row_number, :column_number,:table
 
   #получить элемент по номеру столбца и строки
   def get_item(row, col)
     return nil if row>=row_number||col>=column_number
     table[row][col].dup
+  end
+
+  def each(&block)
+    table.each do |row|
+      block.call(row)
+    end
   end
 
   private

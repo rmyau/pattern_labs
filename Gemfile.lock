@@ -4,12 +4,14 @@ GEM
     fxruby (1.6.46-x64-mingw-ucrt)
       mini_portile2 (~> 2.1)
     mini_portile2 (2.8.1)
+    sqlite3 (1.6.2-x64-mingw-ucrt)
 
 PLATFORMS
   x64-mingw-ucrt
 
 DEPENDENCIES
   fxruby
+  sqlite3
 
 BUNDLED WITH
    2.3.26

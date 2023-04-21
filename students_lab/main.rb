@@ -58,8 +58,8 @@ require_relative 'views/window'
 
 app = FXApp.new
 Window.new(app)
-# app.create
-# app.run
+app.create
+app.run
 
 
 

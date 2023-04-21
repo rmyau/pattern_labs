@@ -1,21 +1,22 @@
 # frozen_string_literal: true
 require_relative '../views/window'
-require '../student_list_models/student_list'
-require '../student_list_models/db_model/db_list_adapter'
-require '../student_list_models/data_list_model/data_list_student_short'
+require_relative '../student_list_models/student_list'
+require_relative '../student_list_models/db_model/db_list_adapter'
+require_relative '../student_list_models/data_list_model/data_list_student_short'
 class StudentListController
   def initialize(view)
     @view = view
     @data_list = DataListStudentShort.new([])
     @data_list.add_observer(@view)
-  end
-
-  def on_view_create
     @student_list = StudentList.new(StudentListDbAdapter.new)
   end
 
+  def on_view_create
+
+  end
+
   def show_view
-    @view.create.run
+    @view.show
   end
 
   def refresh_data(k_page, number_students)

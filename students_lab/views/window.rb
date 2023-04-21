@@ -39,14 +39,16 @@ class Window<FXMainWindow
 
   def update_count_students(count_students)
     @count_student = count_students
+    @page_label.text = "#{@current_page} / #{(@count_student / @students_on_page.to_f).ceil}"
     #изменить отображение страниц
   end
 
   def on_datalist_changed(table)
+    #сделать копию при добавлении и тд
     row_number=0
     table.each do |row|
-      row_number+=1
       (1..3).each { |index_field| @table.setItemText(row_number, index_field-1, row[index_field].to_s)  }
+      row_number+=1
     end
   end
   private
@@ -83,15 +85,16 @@ class Window<FXMainWindow
     btn_back.textColor = Fox.FXRGB(0,23,175)
     #добавить отображение со страницы, на которой мы сейчас
 
-    # res=Array(1..@count_page).join(',')
-    # page_label = FXLabel.new(change_page, res)
+
+    # res=Array(@current_page..).join(',')
+    @page_label = FXLabel.new(change_page, '1')
     btn_next=FXButton.new(change_page, "Далее", :opts=> BUTTON_INITIAL)
     btn_next.textColor = Fox.FXRGB(0,23,175)
 
 
     # Создаем таблицу
     @table = FXTable.new(table_frame, :opts =>  TABLE_READONLY|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT|TABLE_COL_SIZABLE|TABLE_ROW_RENUMBER, :width=>580, :height=>320)
-    @table.setTableSize(10, 3)
+    @table.setTableSize(15, 3)
 
     @table.setColumnText(0, "ФИО")
     @table.setColumnText(1, "Git")

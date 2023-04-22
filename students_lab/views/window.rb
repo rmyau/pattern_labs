@@ -33,8 +33,6 @@ class Window<FXMainWindow
     super
     @controller.refresh_data(@current_page, @students_on_page)
     @controller.show_view
-    #
-    # show
   end
 
   def update_count_students(count_students)
@@ -63,6 +61,7 @@ class Window<FXMainWindow
     frame_filter.resize(500,300)
 
     field_filter =[[:git, 'Гит'], [:email, 'Почта'], [:phone, 'Телефон'], [:telegram, 'Телеграм']]
+
     #ФИЛЬТР ИМЕНИ
     nameLabel = FXLabel.new(frame_filter, "Фамилия и инициалы")
     nameTextField = FXTextField.new(frame_filter, 40)
@@ -79,19 +78,7 @@ class Window<FXMainWindow
 
   def add_table
     table_frame = FXVerticalFrame.new(@first_tab, :padLeft=>20)
-    #отображение страниц
-    change_page = FXHorizontalFrame.new(table_frame, :opts=> LAYOUT_CENTER_X)
-    btn_back=FXButton.new(change_page, "Назад", :opts=> BUTTON_INITIAL)
-    btn_back.textColor = Fox.FXRGB(0,23,175)
-    #добавить отображение со страницы, на которой мы сейчас
-
-
-    # res=Array(@current_page..).join(',')
-    @page_label = FXLabel.new(change_page, '1')
-    btn_next=FXButton.new(change_page, "Далее", :opts=> BUTTON_INITIAL)
-    btn_next.textColor = Fox.FXRGB(0,23,175)
-
-
+    page_change_buttons(table_frame)
     # Создаем таблицу
     @table = FXTable.new(table_frame, :opts =>  TABLE_READONLY|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT|TABLE_COL_SIZABLE|TABLE_ROW_RENUMBER, :width=>580, :height=>320)
     @table.setTableSize(15, 3)
@@ -106,9 +93,17 @@ class Window<FXMainWindow
     @table.setColumnWidth(1, 150)
     @table.setColumnWidth(2, 200)
 
+    @table.getColumnHeader.connect(SEL_COMMAND) do |a, b,col|
+      sort_table_by_column(@table,col)
+    end
 
+    add_crud(table_frame)
+  end
+
+  #добавление кнопок добавить, изменить, обновить, удалить
+  def add_crud(parent)
     #добавление кнопок
-    btn_list = FXHorizontalFrame.new(table_frame)
+    btn_list = FXHorizontalFrame.new(parent)
     btn_add = FXButton.new(btn_list, "Добавить", :opts=>BUTTON_NORMAL)
     btn_update = FXButton.new(btn_list, "Обновить", :opts=>BUTTON_NORMAL)
     btn_change = FXButton.new(btn_list, "Изменить", :opts=>BUTTON_NORMAL)
@@ -133,16 +128,22 @@ class Window<FXMainWindow
       end
     end
 
-    @table.getColumnHeader.connect(SEL_COMMAND) do |a, b,col|
-      sort_table_by_column(@table,col)
-    end
-
     @table.getRowHeader.connect(SEL_RIGHTBUTTONPRESS) do
       @table.killSelection(true)
       btn_change.disable
       btn_delete.disable
     end
+  end
 
+  #отображение страниц
+  def page_change_buttons(parent)
+    change_page = FXHorizontalFrame.new(parent, :opts=> LAYOUT_CENTER_X)
+    btn_back=FXButton.new(change_page, "Назад", :opts=> BUTTON_INITIAL)
+    btn_back.textColor = Fox.FXRGB(0,23,175)
+    #добавить отображение со страницы, на которой мы сейчас
+    @page_label = FXLabel.new(change_page, '1')
+    btn_next=FXButton.new(change_page, "Далее", :opts=> BUTTON_INITIAL)
+    btn_next.textColor = Fox.FXRGB(0,23,175)
   end
 
   #сортировка таблицы по столбцу

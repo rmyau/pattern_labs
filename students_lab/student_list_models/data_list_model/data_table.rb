@@ -5,7 +5,7 @@ class DataTable
     self.row_number = table.size
     self.column_number = max_size_column
   end
-  attr_reader :row_number, :column_number,:table
+  attr_reader :row_number, :column_number
 
   #получить элемент по номеру столбца и строки
   def get_item(row, col)

@@ -37,6 +37,7 @@ class BaseStudent
   attr_reader :id, :git
   def initialize(id: nil, phone:nil, telegram: nil, email: nil, git:nil )
     self.id=id
+    self.git=git
     set_contacts(**{telegram:telegram, phone: phone, email:email})
   end
 

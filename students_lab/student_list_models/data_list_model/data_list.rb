@@ -31,7 +31,6 @@ class DataList
   #получение таблицы
   # Паттерн Шаблон
   def get_data
-
     index_id=0
     dt = obj_list.inject([]) do |res, object|
       row=[index_id]

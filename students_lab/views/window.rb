@@ -43,13 +43,32 @@ class Window<FXMainWindow
     @first_tab = FXHorizontalFrame.new(composite1)
     @first_tab.resize(1000,1000)
     first_tab
-
+    # tab_book.connect(SEL_COMMAND) do
+    #   @controller.refresh_data(@current_page, @students_on_page)
+    # end
     # Создаем вторую вкладку
     tab2 = FXTabItem.new(tab_book, "Вкладка 2", nil)
     composite2 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
 
     tab3 = FXTabItem.new(tab_book, "Вкладка 3", nil)
     composite3 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
+
+    tab_book.connect(SEL_COMMAND) do |sender, selector, data|
+      # Получаем индекс текущей вкладки
+      current_tab_index = sender.current
+      # Обновляем данные в соответствии с текущей вкладкой
+      case current_tab_index
+      when 0
+        # для первой вкладки
+        @controller.refresh_data(@current_page, @students_on_page)
+      # when 1
+      #   # для второй вкладки
+      #   @controller.refresh_data_for_tab2
+      # when 2
+      #   # для третьей вкладки
+      #   @controller.refresh_data_for_tab3
+      end
+    end
   end
 
   def first_tab
@@ -148,19 +167,27 @@ class Window<FXMainWindow
     btn_next.textColor = Fox.FXRGB(0,23,175)
   end
 
-  #сортировка таблицы по столбцу
-  def sort_table_by_column(table, column_index)
-    #ере
-    table_data = (0...table.getNumRows()).map { |row_index| (0...table.getNumColumns()).map { |col_index| table.getItemText(row_index, col_index) } }
+def sort_table_by_column(table, column_index)
+    table_data = []
+    (0...table.getNumRows()).each do |row_index|
+      if table.getItemText(row_index, column_index)!=''
+        row=[]
+        (0...table.getNumColumns()).each do |col_index|
+          row[col_index] = table.getItemText(row_index, col_index)
+        end
+        table_data<<row
+      end
+    end
 
     sorted_table_data = table_data.sort_by { |row_data| row_data[column_index] }
 
-    sorted_table_data.each_with_index do |row_data, row_index|
-      row_data.each_with_index do |cell_data, col_index|
-        table.setItemText(row_index, col_index, cell_data)
+      sorted_table_data.each_with_index do |row_data, row_index|
+        row_data.each_with_index do |cell_data, col_index|
+          table.setItemText(row_index, col_index, cell_data)
+        end
       end
-    end
   end
+
 
   def create_radio_group(field, parent)
     #Фильтрация гита

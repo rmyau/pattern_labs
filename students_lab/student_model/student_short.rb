@@ -15,7 +15,7 @@ class StudentShort<BaseStudent
   end
 
   def self.init_from_student(student)
-    StudentShort.new(student.id, JSON.generate({"short_name": student.short_name, "phone": student.phone, "telegram": student.telegram, "email": student.email}))
+    StudentShort.new(student.id, JSON.generate({"short_name": student.short_name, "phone": student.phone, "telegram": student.telegram, "email": student.email, "git": student.git}))
   end
 
   def to_s

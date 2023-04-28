@@ -13,6 +13,28 @@ class Window<FXMainWindow
     @controller = StudentListController.new(self)
     create_tabs
   end
+
+  def create
+    super
+    @controller.refresh_data(@current_page, @students_on_page)
+    show
+  end
+
+  def update_count_students(count_students)
+    @count_student = count_students
+    @page_label.text = "#{@current_page} / #{(@count_student / @students_on_page.to_f).ceil}"
+  end
+
+  def on_datalist_changed(table)
+    #сделать копию при добавлении и тд
+    row_number=0
+    table.each do |row|
+      (1..3).each { |index_field| @table.setItemText(row_number, index_field-1, row[index_field].to_s)  }
+      row_number+=1
+    end
+  end
+  
+  private
   def create_tabs
     tab_book = FXTabBook.new(self, :opts=>LAYOUT_FILL_X|LAYOUT_FILL_Y)
     # Создаем первую вкладку
@@ -24,32 +46,12 @@ class Window<FXMainWindow
 
     # Создаем вторую вкладку
     tab2 = FXTabItem.new(tab_book, "Вкладка 2", nil)
-    @composite2 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
+    composite2 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
 
     tab3 = FXTabItem.new(tab_book, "Вкладка 3", nil)
-    @composite3 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
-  end
-  def create
-    super
-    @controller.refresh_data(@current_page, @students_on_page)
-    @controller.show_view
+    composite3 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
   end
 
-  def update_count_students(count_students)
-    @count_student = count_students
-    @page_label.text = "#{@current_page} / #{(@count_student / @students_on_page.to_f).ceil}"
-    #изменить отображение страниц
-  end
-
-  def on_datalist_changed(table)
-    #сделать копию при добавлении и тд
-    row_number=0
-    table.each do |row|
-      (1..3).each { |index_field| @table.setItemText(row_number, index_field-1, row[index_field].to_s)  }
-      row_number+=1
-    end
-  end
-  private
   def first_tab
     add_filters
     add_table

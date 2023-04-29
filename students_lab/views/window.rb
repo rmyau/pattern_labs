@@ -7,7 +7,7 @@ class Window<FXMainWindow
 
     super(app, "Students" , :width => 1050, :height => 430)
 
-    @students_on_page=15
+    @students_on_page=5
     @current_page=1
     @count_student=0
     @controller = StudentListController.new(self)
@@ -16,18 +16,23 @@ class Window<FXMainWindow
 
   def create
     super
-    @controller.refresh_data(@current_page, @students_on_page)
+    refresh
     show
   end
 
   def update_count_students(count_students)
     @count_student = count_students
-    @page_label.text = "#{@current_page} / #{(@count_student / @students_on_page.to_f).ceil}"
+    update_page_label
   end
 
   def on_datalist_changed(table)
     #сделать копию при добавлении и тд
     row_number=0
+    (0...@table.getNumRows).each do |row|
+      (0...@table.getNumColumns).each do |col|
+        @table.setItemText(row, col, "")
+      end
+    end
     table.each do |row|
       (1..3).each { |index_field| @table.setItemText(row_number, index_field-1, row[index_field].to_s)  }
       row_number+=1
@@ -43,9 +48,7 @@ class Window<FXMainWindow
     @first_tab = FXHorizontalFrame.new(composite1)
     @first_tab.resize(1000,1000)
     first_tab
-    # tab_book.connect(SEL_COMMAND) do
-    #   @controller.refresh_data(@current_page, @students_on_page)
-    # end
+
     # Создаем вторую вкладку
     tab2 = FXTabItem.new(tab_book, "Вкладка 2", nil)
     composite2 = FXComposite.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
@@ -60,7 +63,7 @@ class Window<FXMainWindow
       case current_tab_index
       when 0
         # для первой вкладки
-        @controller.refresh_data(@current_page, @students_on_page)
+        refresh
       # when 1
       #   # для второй вкладки
       #   @controller.refresh_data_for_tab2
@@ -85,8 +88,8 @@ class Window<FXMainWindow
 
     #ФИЛЬТР ИМЕНИ
     nameLabel = FXLabel.new(frame_filter, "Фамилия и инициалы")
-    nameTextField = FXTextField.new(frame_filter, 40)
-    @filter = {short_name: nameTextField}
+    name_text_field = FXTextField.new(frame_filter, 40)
+    @filter = {short_name: name_text_field}
 
     #фильтрация для остальных полей
     field_filter.each do |field|
@@ -102,7 +105,7 @@ class Window<FXMainWindow
     page_change_buttons(table_frame)
     # Создаем таблицу
     @table = FXTable.new(table_frame, :opts =>  TABLE_READONLY|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT|TABLE_COL_SIZABLE|TABLE_ROW_RENUMBER, :width=>580, :height=>320)
-    @table.setTableSize(15, 3)
+    @table.setTableSize(@students_on_page, 3)
 
     @table.setColumnText(0, "ФИО")
     @table.setColumnText(1, "Git")
@@ -154,6 +157,10 @@ class Window<FXMainWindow
       btn_change.disable
       btn_delete.disable
     end
+
+    btn_update.connect(SEL_COMMAND) do
+      refresh
+    end
   end
 
   #отображение страниц
@@ -165,6 +172,21 @@ class Window<FXMainWindow
     @page_label = FXLabel.new(change_page, '1')
     btn_next=FXButton.new(change_page, "Далее", :opts=> BUTTON_INITIAL)
     btn_next.textColor = Fox.FXRGB(0,23,175)
+
+    btn_back.connect(SEL_COMMAND) do
+      if @current_page!=1
+        @current_page-=1
+        refresh
+        update_page_label
+      end
+    end
+    btn_next.connect(SEL_COMMAND) do
+      if @current_page<(@count_student / @students_on_page.to_f).ceil
+        @current_page+=1
+        refresh
+        update_page_label
+      end
+    end
   end
 
 def sort_table_by_column(table, column_index)
@@ -228,6 +250,15 @@ def sort_table_by_column(table, column_index)
       end
     end
     frame_field
+  end
+
+
+  def refresh
+    @controller.refresh_data(@current_page, @students_on_page)
+  end
+
+  def update_page_label
+    @page_label.text = "#{@current_page} / #{(@count_student / @students_on_page.to_f).ceil}"
   end
 
 end

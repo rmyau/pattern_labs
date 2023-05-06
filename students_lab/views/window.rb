@@ -158,10 +158,15 @@ class Window<FXMainWindow
       btn_delete.disable
     end
 
+    btn_add.connect(SEL_COMMAND) do
+      @controller.show_add_dialog
+    end
+
     btn_update.connect(SEL_COMMAND) do
       refresh
     end
   end
+
 
   #отображение страниц
   def page_change_buttons(parent)

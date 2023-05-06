@@ -30,7 +30,6 @@ class BaseStudentList
   #полуение n элементов page страницы
   def get_k_n_student_short_list(page, n, data_list)
     page_list = students[(page-1)*n, n].map{|st| StudentShort.init_from_student(st)}
-    puts page_list
     return DataListStudentShort.new(page_list) if data_list.nil?
     data_list.replace_objects(page_list)
     data_list

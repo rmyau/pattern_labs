@@ -39,7 +39,11 @@ class StudentListController
     add_controller = AddStudentController.new(self)
     add_view = CreateStudentDialog.new(@view, add_controller)
     add_controller.add_view(add_view)
-    add_view.execute
+    student = add_controller.execute
+    unless student.nil?
+      @student_list.add_student(student)
+      @view.refresh
+    end
 
   end
 

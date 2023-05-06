@@ -38,7 +38,10 @@ class Window<FXMainWindow
       row_number+=1
     end
   end
-  
+
+  def refresh
+    @controller.refresh_data(@current_page, @students_on_page)
+  end
   private
   def create_tabs
     tab_book = FXTabBook.new(self, :opts=>LAYOUT_FILL_X|LAYOUT_FILL_Y)
@@ -258,9 +261,7 @@ def sort_table_by_column(table, column_index)
   end
 
 
-  def refresh
-    @controller.refresh_data(@current_page, @students_on_page)
-  end
+
 
   def update_page_label
     @page_label.text = "#{@current_page} / #{(@count_student / @students_on_page.to_f).ceil}"

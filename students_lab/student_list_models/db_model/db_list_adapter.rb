@@ -29,7 +29,7 @@ class StudentListDbAdapter
 
   #замена студента по id
   def replace_student(student_id, student)
-    db.execute('UPDATE students SET first_name=?, last_name=?, second_name=?, phone=?, telegram=?, mail=?, git=? WHERE id=?',*student_fields(student), student_id)
+    db.execute('UPDATE students SET first_name=?, last_name=?, second_name=?, phone=?, telegram=?, email=?, git=? WHERE id=?',*student_fields(student), student_id)
   end
 
   #подсчет количества студентов

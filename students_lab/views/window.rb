@@ -26,7 +26,7 @@ class Window<FXMainWindow
   end
 
   def on_datalist_changed(table)
-    #сделать копию при добавлении и тд
+
     row_number=0
     (0...@table.getNumRows).each do |row|
       (0...@table.getNumColumns).each do |col|
@@ -42,6 +42,7 @@ class Window<FXMainWindow
   def refresh
     @controller.refresh_data(@current_page, @students_on_page)
   end
+
   private
   def create_tabs
     tab_book = FXTabBook.new(self, :opts=>LAYOUT_FILL_X|LAYOUT_FILL_Y)
@@ -162,11 +163,16 @@ class Window<FXMainWindow
     end
 
     btn_add.connect(SEL_COMMAND) do
-      @controller.show_add_dialog
+      @controller.student_add
     end
 
     btn_update.connect(SEL_COMMAND) do
       refresh
+    end
+
+    btn_change.connect(SEL_COMMAND) do
+      index = (0...@table.getNumRows).find {|row_index| @table.rowSelected?(row_index)}
+      @controller.student_update(index)
     end
   end
 
@@ -259,9 +265,6 @@ def sort_table_by_column(table, column_index)
     end
     frame_field
   end
-
-
-
 
   def update_page_label
     @page_label.text = "#{@current_page} / #{(@count_student / @students_on_page.to_f).ceil}"

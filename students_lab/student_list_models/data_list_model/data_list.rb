@@ -23,7 +23,11 @@ class DataList
 
   #массив id выделенных элементов
   def get_select
-    obj_list[selected_items].id
+    selected_items.inject([]) {|res, index| res<<obj_list[index].id}
+  end
+
+  def clear_selected
+    self.selected_items = []
   end
 
   def get_names; end

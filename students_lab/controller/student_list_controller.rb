@@ -10,6 +10,7 @@ require_relative '../student_list_models/files_model/student_list_txt'
 require_relative 'crud/add_student_controller'
 require_relative '../views/create_student_dialog'
 require_relative '../student_model/student'
+require_relative 'crud/update_student_controller'
 
 require 'fox16'
 require 'win32api'
@@ -36,14 +37,29 @@ class StudentListController
     @view.update_count_students(@student_list.student_count)
   end
 
-  def show_add_dialog(student:nil)
-    controller = AddStudentController.new(@student_list)
-    view = CreateStudentDialog.new(@view, controller, student)
+  #открытие модального окна
+  def show_dialog(controller)
+    view = CreateStudentDialog.new(@view, controller)
     controller.add_view(view)
     controller.execute
 
     @view.refresh
+  end
 
+  #добавление студента
+  def student_add
+    controller = AddStudentController.new(@student_list)
+    show_dialog(controller)
+  end
+
+  #изменение студента
+  def student_update(index)
+    @data_list.select(index)
+    id = @data_list.get_select
+    @data_list.clear_selected
+
+    controller = UpdateStudentController.new(@student_list, id)
+    show_dialog(controller)
   end
 
 

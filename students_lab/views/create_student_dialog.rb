@@ -3,44 +3,36 @@ require 'fox16'
 
 include Fox
 class CreateStudentDialog<FXDialogBox
-  def initialize(parent, controller, student)
+  def initialize(parent, controller)
     # Создаем родительское модальное окно
     super(parent, "Студент", DECOR_TITLE | DECOR_BORDER | DECOR_RESIZE)
     @controller = controller
-    @student = student
+    @student = nil
 
     setWidth(400)
     setHeight(300)
     add_fields
   end
 
+  def set_student(student)
+    @student=student
+    enter_student
+  end
+
+  private
   def add_fields
     frame_data = FXVerticalFrame.new(self, :opts=> LAYOUT_FILL_X|LAYOUT_FILL_Y )
 
     #создание полей
     field_name =[[:last_name,'Фамилия'], [:first_name, 'Имя'], [:second_name, 'Отчество'], [:git, 'Гит'], [:email, 'Почта'], [:phone, 'Телефон'], [:telegram, 'Телеграм']]
-    field_text = {}
+    @field_text = {}
     field_name.each do |field|
       frame_field = FXHorizontalFrame.new(frame_data )
       field_label = FXLabel.new(frame_field, field[1], :opts => LAYOUT_FIX_WIDTH)
       field_label.setWidth(100)
       text = FXTextField.new(frame_field, 40, :opts=>TEXTFIELD_NORMAL)
-      field_text[field[0]] = text
+      @field_text[field[0]] = text
     end
-
-    #если дан студент, то заполнить данные
-    unless @student.nil?
-      field_text.each_key do |name_field|
-        unless name_field==:first_name || name_field==:second_name || name_field==:last_name
-          field_text[name_field].editable = false
-          # field_text ...
-        end
-      end
-    end
-
-
-
-    #если student не nil, то заполнить поля и запретить изменения всего, кроме фио
 
     btn_frame = FXHorizontalFrame.new(frame_data, LAYOUT_CENTER_X)
     btn_add=FXButton.new(btn_frame, "Сохранить")
@@ -62,10 +54,10 @@ class CreateStudentDialog<FXDialogBox
     end
 
     #валидация полей
-    field_text.each_key do |name_field|
-      field_text[name_field].connect(SEL_CHANGED) do |text_field|
+    @field_text.each_key do |name_field|
+      @field_text[name_field].connect(SEL_CHANGED) do |text_field|
         res = {}
-        field_text.each do |k,v|
+        @field_text.each do |k,v|
           text = v.text.empty? ? nil : v.text
           res[k] = text
         end
@@ -77,10 +69,23 @@ class CreateStudentDialog<FXDialogBox
         else
           btn_add.disable
         end
-
       end
     end
   end
+
+  def enter_student
+    unless @student.nil?
+      student_hash = @student.to_hash
+      @field_text.each_key do |name_field|
+        unless name_field==:first_name || name_field==:second_name || name_field==:last_name
+          @field_text[name_field].editable = false
+        end
+        @field_text[name_field].text = student_hash[name_field]
+      end
+    end
+  end
+
+
 
 end
 

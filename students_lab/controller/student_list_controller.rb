@@ -9,6 +9,7 @@ require_relative '../student_list_models/files_model/student_list_yaml'
 require_relative '../student_list_models/files_model/student_list_txt'
 require_relative 'add_student_controller'
 require_relative '../views/create_student_dialog'
+require_relative '../student_model/student'
 
 require 'fox16'
 require 'win32api'
@@ -36,7 +37,7 @@ class StudentListController
   end
 
   def show_add_dialog
-    add_controller = AddStudentController.new
+    add_controller = AddStudentController.new(self)
     add_view = CreateStudentDialog.new(@view, add_controller)
     add_controller.add_view(add_view)
     student = add_controller.execute
@@ -44,7 +45,16 @@ class StudentListController
       @student_list.add_student(student)
       @view.refresh
     end
+  end
 
+  def validate_fields(fields)
+    begin
+      student = Student.new(**fields)
+      return student
+
+    rescue ArgumentError => e
+      return nil
+    end
   end
 
 

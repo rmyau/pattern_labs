@@ -16,8 +16,6 @@ class CreateStudentDialog<FXDialogBox
   end
 
   def add_fields
-
-
     frame_data = FXVerticalFrame.new(self, :opts=> LAYOUT_FILL_X|LAYOUT_FILL_Y )
 
     field_name =[[:last_name,'Фамилия'], [:first_name, 'Имя'], [:second_name, 'Отчество'], [:git, 'Гит'], [:email, 'Почта'], [:phone, 'Телефон'], [:telegram, 'Телеграм']]

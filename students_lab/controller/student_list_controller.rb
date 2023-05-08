@@ -7,7 +7,7 @@ require_relative '../student_list_models/files_model/file_list_adapter'
 require_relative '../student_list_models/files_model/student_list_json'
 require_relative '../student_list_models/files_model/student_list_yaml'
 require_relative '../student_list_models/files_model/student_list_txt'
-require_relative 'add_student_controller'
+require_relative 'crud/add_student_controller'
 require_relative '../views/create_student_dialog'
 require_relative '../student_model/student'
 
@@ -36,25 +36,14 @@ class StudentListController
     @view.update_count_students(@student_list.student_count)
   end
 
-  def show_add_dialog
-    add_controller = AddStudentController.new(self)
-    add_view = CreateStudentDialog.new(@view, add_controller)
-    add_controller.add_view(add_view)
-    student = add_controller.execute
-    unless student.nil?
-      @student_list.add_student(student)
-      @view.refresh
-    end
-  end
+  def show_add_dialog(student:nil)
+    controller = AddStudentController.new(@student_list)
+    view = CreateStudentDialog.new(@view, controller, student)
+    controller.add_view(view)
+    controller.execute
 
-  def validate_fields(fields)
-    begin
-      student = Student.new(**fields)
-      return student
+    @view.refresh
 
-    rescue ArgumentError => e
-      return nil
-    end
   end
 
 

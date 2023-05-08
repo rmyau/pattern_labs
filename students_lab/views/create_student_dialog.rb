@@ -3,21 +3,21 @@ require 'fox16'
 
 include Fox
 class CreateStudentDialog<FXDialogBox
-  def initialize(parent, controller, student:nil)
+  def initialize(parent, controller, student)
     # Создаем родительское модальное окно
-    super(parent, "Добавление студента", DECOR_TITLE | DECOR_BORDER | DECOR_RESIZE)
+    super(parent, "Студент", DECOR_TITLE | DECOR_BORDER | DECOR_RESIZE)
     @controller = controller
     @student = student
-    # Устанавливаем размер окна и делаем его модальным
+
     setWidth(400)
     setHeight(300)
     add_fields
-    # setModal(true)
   end
 
   def add_fields
     frame_data = FXVerticalFrame.new(self, :opts=> LAYOUT_FILL_X|LAYOUT_FILL_Y )
 
+    #создание полей
     field_name =[[:last_name,'Фамилия'], [:first_name, 'Имя'], [:second_name, 'Отчество'], [:git, 'Гит'], [:email, 'Почта'], [:phone, 'Телефон'], [:telegram, 'Телеграм']]
     field_text = {}
     field_name.each do |field|
@@ -27,6 +27,18 @@ class CreateStudentDialog<FXDialogBox
       text = FXTextField.new(frame_field, 40, :opts=>TEXTFIELD_NORMAL)
       field_text[field[0]] = text
     end
+
+    #если дан студент, то заполнить данные
+    unless @student.nil?
+      field_text.each_key do |name_field|
+        unless name_field==:first_name || name_field==:second_name || name_field==:last_name
+          field_text[name_field].editable = false
+          # field_text ...
+        end
+      end
+    end
+
+
 
     #если student не nil, то заполнить поля и запретить изменения всего, кроме фио
 
@@ -39,15 +51,14 @@ class CreateStudentDialog<FXDialogBox
     btn_back.textColor = Fox.FXRGB(0,23,175)
 
     btn_add.connect(SEL_COMMAND) do
+      @controller.save_student(@student)
       self.handle(btn_add, FXSEL(Fox::SEL_COMMAND,
                                   Fox::FXDialogBox::ID_ACCEPT), nil)
-      # @controller.on_add_click(@student)
     end
 
     btn_back.connect(SEL_COMMAND) do
       self.handle(btn_back, FXSEL(Fox::SEL_COMMAND,
                                    Fox::FXDialogBox::ID_CANCEL), nil)
-      # @controller.on_add_click(@student)
     end
 
     #валидация полей
@@ -60,7 +71,7 @@ class CreateStudentDialog<FXDialogBox
         end
 
         result = @controller.validate_fields(res)
-        if result.class==Student
+        unless result.nil?
           @student = result
           btn_add.enable
         else
@@ -69,13 +80,8 @@ class CreateStudentDialog<FXDialogBox
 
       end
     end
-
-
-    def execute
-      super
-      @student
-    end
   end
+
 end
 
 

@@ -53,6 +53,15 @@ class StudentListController
     show_dialog(controller)
   end
 
+  def student_delete(indexes)
+    @data_list.select(*indexes)
+    id_list = @data_list.get_select
+    @data_list.clear_selected
+
+    id_list.each{|student_id| @student_list.remove_student(student_id)}
+    @view.refresh
+  end
+
   private
   #открытие модального окна
   def show_dialog(controller)

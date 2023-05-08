@@ -174,6 +174,11 @@ class Window<FXMainWindow
       index = (0...@table.getNumRows).find {|row_index| @table.rowSelected?(row_index)}
       @controller.student_update(index)
     end
+
+    btn_delete.connect(SEL_COMMAND) do
+      indexes = (0...@table.getNumRows).select{|row_index| @table.rowSelected?(row_index)}
+      @controller.student_delete(indexes)
+    end
   end
 
 

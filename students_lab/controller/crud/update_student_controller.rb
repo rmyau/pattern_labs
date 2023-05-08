@@ -14,7 +14,6 @@ class UpdateStudentController<AddStudentController
   end
 
   def save_student(student)
-    puts student.to_hash
     @student_list.replace_student(@student_id, student)
   end
 

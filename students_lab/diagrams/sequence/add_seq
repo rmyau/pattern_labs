@@ -5,6 +5,7 @@ boundary    "wd: Window"               as wd
 control     "slc: StudentListController"    as slc
 entity      "csd: CreateStudentDialog"    as csd
 control      "asc: AddStudentController"  as asc
+entity      "sl: StudentList"         as sl
 entity      "slda: StudentListDbAdapter"         as slda
 entity      "DB"            as db
 
@@ -12,26 +13,33 @@ database    DB                              as db_source
 
 
 user -> wd:"Добавить"
-wd -> slc: show_add_dialog
-slc -> asc: <<new(self)>>
+wd->slc: student_add
+slc -> asc: <<new(StudentList)>>
 asc --> slc
+slc -> slc: show_dialog(AddStudentController)
+
 slc->csd : <<new(Window, AddStudentController)>>
 csd -->slc
 slc ->asc: add_view(CreateStudentDialog)
 asc --> slc
 slc->asc: execute
-asc -> csd: execute
+asc->csd: execute
 csd -> asc: validate_fields(Hash)
-asc-->csd: Student
-csd --> asc: Student
-asc --> slc: Student
-
-slc->slda: add_student(Student)
+asc --> csd: Student
+csd ->asc: save_student(Student)
+asc->sl: add_student(Student)
+sl->slda: add_student(Student)
 slda->db: execute
+
 db->db_source: insert
 db_source-->db
 db-->slda
-slda-->slc
+slda-->sl
+sl-->asc
+asc-->csd
+csd-->asc
+
+asc-->slc
 slc->wd: refresh
 wd->slc: refresh_data(Integer, Integer)
 slc-->wd

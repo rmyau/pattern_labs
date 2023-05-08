@@ -37,15 +37,6 @@ class StudentListController
     @view.update_count_students(@student_list.student_count)
   end
 
-  #открытие модального окна
-  def show_dialog(controller)
-    view = CreateStudentDialog.new(@view, controller)
-    controller.add_view(view)
-    controller.execute
-
-    @view.refresh
-  end
-
   #добавление студента
   def student_add
     controller = AddStudentController.new(@student_list)
@@ -62,5 +53,14 @@ class StudentListController
     show_dialog(controller)
   end
 
+  private
+  #открытие модального окна
+  def show_dialog(controller)
+    view = CreateStudentDialog.new(@view, controller)
+    controller.add_view(view)
+    controller.execute
+
+    @view.refresh
+  end
 
 end

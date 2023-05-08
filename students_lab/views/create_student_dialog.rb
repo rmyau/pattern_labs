@@ -3,20 +3,20 @@ require 'fox16'
 
 include Fox
 class CreateStudentDialog<FXDialogBox
-  def initialize(parent, controller)
+  def initialize(parent, controller, student:nil)
     # Создаем родительское модальное окно
     super(parent, "Добавление студента", DECOR_TITLE | DECOR_BORDER | DECOR_RESIZE)
     @controller = controller
-    @student = nil
+    @student = student
     # Устанавливаем размер окна и делаем его модальным
-    setWidth(500)
+    setWidth(400)
     setHeight(300)
     add_fields
     # setModal(true)
   end
 
   def add_fields
-    #кнопка отмены
+
 
     frame_data = FXVerticalFrame.new(self, :opts=> LAYOUT_FILL_X|LAYOUT_FILL_Y )
 
@@ -30,11 +30,14 @@ class CreateStudentDialog<FXDialogBox
       field_text[field[0]] = text
     end
 
-    btn_add=FXButton.new(frame_data, "Добавить")
+    #если student не nil, то заполнить поля и запретить изменения всего, кроме фио
+
+    btn_frame = FXHorizontalFrame.new(frame_data, LAYOUT_CENTER_X)
+    btn_add=FXButton.new(btn_frame, "Сохранить")
     btn_add.textColor = Fox.FXRGB(0,23,175)
     btn_add.disable
 
-    btn_back=FXButton.new(frame_data, "Отмена")
+    btn_back=FXButton.new(btn_frame, "Отмена")
     btn_back.textColor = Fox.FXRGB(0,23,175)
 
     btn_add.connect(SEL_COMMAND) do

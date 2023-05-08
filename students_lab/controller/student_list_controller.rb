@@ -36,7 +36,7 @@ class StudentListController
   end
 
   def show_add_dialog
-    add_controller = AddStudentController.new(self)
+    add_controller = AddStudentController.new
     add_view = CreateStudentDialog.new(@view, add_controller)
     add_controller.add_view(add_view)
     student = add_controller.execute

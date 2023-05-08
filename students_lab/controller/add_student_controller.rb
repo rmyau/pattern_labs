@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 require_relative '../student_model/student'
 class AddStudentController
-  def initialize(parent)
-    @main_controller = parent
-  end
 
   #привязка view
   def add_view(view)
@@ -16,7 +13,7 @@ class AddStudentController
       return student
 
     rescue ArgumentError => e
-      return false
+      return nil
     end
   end
 

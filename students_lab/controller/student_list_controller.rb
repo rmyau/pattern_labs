@@ -10,7 +10,9 @@ require_relative '../student_list_models/files_model/student_list_txt'
 require_relative 'crud/add_student_controller'
 require_relative '../views/create_student_dialog'
 require_relative '../student_model/student'
-require_relative 'crud/update_student_controller'
+require_relative 'crud/change_student_name_controller'
+require_relative 'crud/change_student_git_controller'
+require_relative 'crud/change_student_contact_controller'
 
 require 'fox16'
 require 'win32api'
@@ -43,16 +45,39 @@ class StudentListController
     show_dialog(controller)
   end
 
+  private
   #изменение студента
-  def student_update(index)
+  def get_student_id(index)
     @data_list.select(index)
     id = @data_list.get_select
     @data_list.clear_selected
+    id
+  end
 
-    controller = UpdateStudentController.new(@student_list, id)
+  public
+  def student_change_name(index)
+    puts 'update name'
+    id = get_student_id(index)
+    controller = ChangeStudentNameController.new(@student_list, id)
     show_dialog(controller)
   end
 
+  def student_change_git(index)
+    puts 'update git'
+    id = get_student_id(index)
+    controller = ChangeStudentGitController.new(@student_list, id)
+    show_dialog(controller)
+  end
+
+  def student_change_contact(index)
+    puts 'update name'
+    id = get_student_id(index)
+    controller = ChangeStudentContactController.new(@student_list, id)
+    show_dialog(controller)
+  end
+
+
+  #удаление студента
   def student_delete(indexes)
     @data_list.select(*indexes)
     id_list = @data_list.get_select

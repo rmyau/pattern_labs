@@ -134,11 +134,17 @@ class Window<FXMainWindow
     btn_list = FXHorizontalFrame.new(parent)
     btn_add = FXButton.new(btn_list, "Добавить", :opts=>BUTTON_NORMAL)
     btn_update = FXButton.new(btn_list, "Обновить", :opts=>BUTTON_NORMAL)
-    btn_change = FXButton.new(btn_list, "Изменить", :opts=>BUTTON_NORMAL)
+    combo_change = FXComboBox.new(btn_list, 20, :opts=>  FRAME_SUNKEN|FRAME_THICK|LAYOUT_SIDE_TOP|LAYOUT_FILL_X)
+    # btn_change = FXButton.new(btn_list, "Изменить", :opts=>BUTTON_NORMAL)
     btn_delete = FXButton.new(btn_list, "Удалить", :opts=>BUTTON_NORMAL)
 
-    btn_change.disable
+    combo_change.disable
     btn_delete.disable
+
+    combo_change.appendItem("Изменить ФИО")
+    combo_change.appendItem("Изменить Git")
+    combo_change.appendItem("Изменить контакт")
+
 
     # Устанавливаем обработчик события SEL_CHANGED для таблицы
     @table.connect(SEL_CHANGED) do
@@ -147,18 +153,18 @@ class Window<FXMainWindow
 
       # Если выделена только одна строка, кнопка должна быть неактивной
       if num_selected_rows == 1
-        btn_change.enable
+        combo_change.enable
         btn_delete.enable
         # Если выделено несколько строк, кнопка должна быть активной
       elsif num_selected_rows >1
-        btn_change.disable
+        combo_change.disable
         btn_delete.enable
       end
     end
 
     @table.getRowHeader.connect(SEL_RIGHTBUTTONPRESS) do
       @table.killSelection(true)
-      btn_change.disable
+      combo_change.disable
       btn_delete.disable
     end
 
@@ -170,10 +176,19 @@ class Window<FXMainWindow
       refresh
     end
 
-    btn_change.connect(SEL_COMMAND) do
+    combo_change.connect(SEL_COMMAND) do
       index = (0...@table.getNumRows).find {|row_index| @table.rowSelected?(row_index)}
-      @controller.student_update(index)
+      case combo_change.currentItem
+      when 0
+        @controller.student_change_name(index)
+      when 1
+        @controller.student_change_git(index)
+      when 2
+        @controller.student_change_contact(index)
+      end
     end
+
+
 
     btn_delete.connect(SEL_COMMAND) do
       indexes = (0...@table.getNumRows).select{|row_index| @table.rowSelected?(row_index)}

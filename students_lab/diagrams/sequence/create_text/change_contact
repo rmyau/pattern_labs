@@ -5,7 +5,7 @@ boundary    "wd: Window"               as wd
 control     "slc: StudentListController"    as slc
 entity      "dlss: DataListStudentShort"         as dlss
 entity      "csd: CreateStudentDialog"    as csd
-control      "usc: UpdateStudentController"  as asc
+control      "ChangeStudentContactController"  as asc
 entity      "sl: StudentList"         as sl
 entity      "slda: StudentListDbAdapter"         as slda
 entity      "DB"            as db
@@ -13,8 +13,9 @@ entity      "DB"            as db
 database    DB                              as db_source
 
 
-user -> wd:"Изменить"
-wd->slc: student_update(Integer)
+user -> wd:"Изменить имя"
+wd->slc: student_change_name(Integer)
+slc->slc: student_change(Integer, ChangeStudentContactController)
 slc->dlss: select(Ineteger)
 dlss-->slc
 slc->dlss: get_select
@@ -23,9 +24,9 @@ slc->dlss: clear_selected
 dlss-->slc
 slc -> asc: <<new(StudentList,Integer)>>
 asc --> slc
-slc -> slc: show_dialog(UpdateStudentController)
+slc -> slc: show_dialog(ChangeStudentContactController)
 
-slc->csd : <<new(Window, UpdateStudentController)>>
+slc->csd : <<new(Window, ChangeStudentContactController)>>
 csd -->slc
 slc ->asc: add_view(CreateStudentDialog)
 asc->sl: get_student_by_id(Integer)
@@ -36,8 +37,9 @@ db_source-->db: Hash
 db-->slda:Student
 slda-->sl: Student
 sl-->asc: Student
-asc->csd: set_student(Student)
-csd->csd: enter_student
+asc->asc:get_editable_fields
+asc->csd: set_student(Student,Array)
+csd->csd: enter_student(Array)
 csd-->asc
 asc-->slc
 
@@ -64,8 +66,3 @@ wd->slc: refresh_data(Integer, Integer)
 slc-->wd
 wd-->slc
 slc-->user
-
-
-
-
-

@@ -1,0 +1,68 @@
+@startuml
+
+actor       Пользователь                        as user
+boundary    "wd: Window"               as wd
+control     "slc: StudentListController"    as slc
+entity      "dlss: DataListStudentShort"         as dlss
+entity      "csd: CreateStudentDialog"    as csd
+control      "csnc: ChangeStudentNameController"  as asc
+entity      "sl: StudentList"         as sl
+entity      "slda: StudentListDbAdapter"         as slda
+entity      "DB"            as db
+
+database    DB                              as db_source
+
+
+user -> wd:"Изменить имя"
+wd->slc: student_change_name(Integer)
+slc->slc: student_change(Integer, ChangeStudentNameController)
+slc->dlss: select(Ineteger)
+dlss-->slc
+slc->dlss: get_select
+dlss-->slc: Integer
+slc->dlss: clear_selected
+dlss-->slc
+slc -> asc: <<new(StudentList,Integer)>>
+asc --> slc
+slc -> slc: show_dialog(ChangeStudentNameController)
+
+slc->csd : <<new(Window, ChangeStudentNameController)>>
+csd -->slc
+slc ->asc: add_view(CreateStudentDialog)
+asc->sl: get_student_by_id(Integer)
+sl->slda: get_student_by_id(Integer)
+slda->db: execute
+db->db_source: select
+db_source-->db: Hash
+db-->slda:Student
+slda-->sl: Student
+sl-->asc: Student
+asc->asc:get_editable_fields
+asc->csd: set_student(Student,Array)
+csd->csd: enter_student(Array)
+csd-->asc
+asc-->slc
+
+slc->asc: execute
+asc->csd: execute
+csd -> asc: validate_fields(Hash)
+asc --> csd: Student
+csd ->asc: save_student(Student)
+asc->sl: replace_student(Integer,Student)
+sl->slda: replace_student(Integer,Student)
+slda->db: execute
+
+db->db_source: update
+db_source-->db
+db-->slda
+slda-->sl
+sl-->asc
+asc-->csd
+csd-->asc
+
+asc-->slc
+slc->wd: refresh
+wd->slc: refresh_data(Integer, Integer)
+slc-->wd
+wd-->slc
+slc-->user

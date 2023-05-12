@@ -1,0 +1,41 @@
+@startuml
+
+actor       Пользователь                        as user
+boundary    "wd: Window"               as wd
+control     "slc: StudentListController"    as slc
+entity      "dlss: DataListStudentShort"         as dlss
+entity      "csd: CreateStudentDialog"    as csd
+control      "usc: UpdateStudentController"  as asc
+entity      "sl: StudentList"         as sl
+entity      "slda: StudentListDbAdapter"         as slda
+entity      "DB"            as db
+
+database    DB                              as db_source
+
+
+user -> wd:"Удалить"
+wd->slc: student_delete(Integer)
+slc->dlss: select(Ineteger)
+dlss-->slc
+slc->dlss: get_select
+dlss-->slc: Array
+slc->dlss: clear_selected
+dlss-->slc
+slc->sl: remove_student(Integer)
+sl->slda: remove_student(Integer)
+slda->db: execute(String, Array)
+db->db_source: execute
+db_source-->db
+db-->slda
+slda-->sl
+sl-->slc
+slc->wd: refresh
+wd->slc: refresh_data(Integer, Integer)
+slc-->wd
+wd-->slc
+slc-->user
+
+
+
+
+

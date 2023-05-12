@@ -60,8 +60,8 @@ class StudentListController
 
     controller = controller_type.new(@student_list, id)
     show_dialog(controller)
-
   end
+
   def student_change_name(index)
     student_change(index, ChangeStudentNameController)
   end

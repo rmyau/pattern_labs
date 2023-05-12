@@ -2,6 +2,7 @@
 require_relative 'change_student_controller'
 class ChangeStudentNameController<ChangeStudentController
   public_class_method :new
+  private
   def get_editable_fields
     [:first_name, :second_name, :last_name]
   end

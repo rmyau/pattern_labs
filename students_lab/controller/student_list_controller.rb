@@ -45,13 +45,7 @@ class StudentListController
     show_dialog(controller)
   end
 
-  private
   #изменение студента
-  def get_student_id(index)
-
-    id
-  end
-
   public
   def student_change(index, controller_type)
     @data_list.select(index)

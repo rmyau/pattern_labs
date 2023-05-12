@@ -77,7 +77,6 @@ class CreateStudentDialog<FXDialogBox
     unless @student.nil?
       student_hash = @student.to_hash
       @field_text.each_key do |name_field|
-        puts "fields #{name_field}"
         unless editable_fields.include?(name_field)
           @field_text[name_field].editable = false
         end

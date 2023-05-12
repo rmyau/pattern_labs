@@ -48,32 +48,30 @@ class StudentListController
   private
   #изменение студента
   def get_student_id(index)
-    @data_list.select(index)
-    id = @data_list.get_select
-    @data_list.clear_selected
+
     id
   end
 
   public
-  def student_change_name(index)
-    puts 'update name'
-    id = get_student_id(index)
-    controller = ChangeStudentNameController.new(@student_list, id)
+  def student_change(index, controller_type)
+    @data_list.select(index)
+    id = @data_list.get_select
+    @data_list.clear_selected
+
+    controller = controller_type.new(@student_list, id)
     show_dialog(controller)
+
+  end
+  def student_change_name(index)
+    student_change(index, ChangeStudentNameController)
   end
 
   def student_change_git(index)
-    puts 'update git'
-    id = get_student_id(index)
-    controller = ChangeStudentGitController.new(@student_list, id)
-    show_dialog(controller)
+    student_change(index, ChangeStudentGitController)
   end
 
   def student_change_contact(index)
-    puts 'update name'
-    id = get_student_id(index)
-    controller = ChangeStudentContactController.new(@student_list, id)
-    show_dialog(controller)
+    student_change(index, ChangeStudentContactController)
   end
 
 

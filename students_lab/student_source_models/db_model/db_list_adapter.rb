@@ -52,7 +52,7 @@ class StudentListDbAdapter
 
   private
 
-
+  attr_accessor :db
 
   def student_fields(student)
     [student.first_name, student.last_name,  student.second_name, student.phone, student.telegram, student.email, student.git]

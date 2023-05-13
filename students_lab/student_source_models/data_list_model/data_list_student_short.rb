@@ -5,10 +5,6 @@ class DataListStudentShort<DataList
 
   public_class_method :new
 
-  def initialize(obj_list)
-    super
-  end
-
   #получение массива наименования аттрибутов
   def get_names
     %w[№ short_name git find_contact]

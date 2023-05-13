@@ -1,10 +1,10 @@
-require_relative 'student_list_models/files_model/student_list_json'
-require_relative 'student_list_models/files_model/student_list_txt'
-require_relative 'student_list_models/files_model/student_list_yaml'
-require_relative 'student_list_models/files_model/base_student_list'
-require_relative 'student_list_models/student_list'
-require_relative 'student_list_models/files_model/student_list_strategy'
-require_relative 'student_list_models/files_model/file_list_adapter'
+require_relative 'student_source_models/files_model/student_list_json'
+require_relative 'student_source_models/files_model/student_list_txt'
+require_relative 'student_source_models/files_model/student_list_yaml'
+require_relative 'student_source_models/files_model/base_student_list'
+require_relative 'student_source_models/student_list'
+require_relative 'student_source_models/files_model/student_list_strategy'
+require_relative 'student_source_models/files_model/file_list_adapter'
 
 # a = StudentListTxt.new()
 # a.read_file("C:/Users/katya/Desktop/ruby_lab/students_lab/student_list.txt")

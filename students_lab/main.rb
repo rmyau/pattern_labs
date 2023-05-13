@@ -1,6 +1,6 @@
 require_relative 'student_model/student'
 require_relative 'student_model/student_short'
-require_relative 'student_list_models/data_list_model/data_table'
+require_relative 'student_source_models/data_list_model/data_table'
 require_relative 'views/window'
 
 # st0=Student.new(**{first_name: "Александр",second_name: "Сергеевич",last_name: 'Кукушкин',id:3, phone:'89231432112'})
@@ -49,7 +49,7 @@ require_relative 'views/window'
 # end
 # require 'sqlite3'
 #
-# require_relative 'student_list_models/db_model/db_list_adapter'
+# require_relative 'student_source_models/db_model/db_list_adapter'
 #
 #
 # db=StudentListDB.new

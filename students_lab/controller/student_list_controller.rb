@@ -80,7 +80,7 @@ class StudentListController
   end
 
   private
-  #открытие модального окна
+  #привязка модального окна
   def show_dialog(controller)
     view = CreateStudentDialog.new(@view, controller)
     controller.add_view(view)

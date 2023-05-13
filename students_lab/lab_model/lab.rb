@@ -12,7 +12,8 @@ class Lab
 
   #добавить валидацию!!!!
   # дата - чтобы предыдущая дата была либо нил, либо раньше
-  # название - буковки?
+  # название - все что угодно
+  # id - генерится программно
 
   def to_s
     res = "Lab#{number} #{name} #{date_load}"
@@ -25,6 +26,10 @@ class Lab
     end
     info_hash
   end
+
+
+  def self.validate_is_date(); end
+
 
 
 

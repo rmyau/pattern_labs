@@ -51,15 +51,20 @@ require_relative 'views/window'
 #
 # require_relative 'student_source_models/db_model/db_list_adapter'
 #
-#
-# db=StudentListDB.new
+
+require_relative 'student_source_models/student_lab'
+require_relative 'lab_model/lab'
+lab1 = Lab.new(**{number: 3, name: 'Лаба333', date_load: '2023.21.10'})
+db=StudentLab.new
+
+
 
 # st2 = Student.new(**{first_name: "Карина", second_name: "Кареновна",last_name: "Краснова", email: "bubu_bla@yandex.ru"})
 
-app = FXApp.new
-Window.new(app)
-app.create
-app.run
+# app = FXApp.new
+# Window.new(app)
+# app.create
+# app.run
 
 
 

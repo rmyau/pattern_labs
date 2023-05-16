@@ -2,6 +2,7 @@
 require 'fox16'
 include Fox
 require_relative '../controller/student_lab_controller'
+require_relative 'tab_student'
 class TabLab<FXVerticalFrame
   def initialize(parent, *args, &blk)
     super
@@ -72,6 +73,8 @@ class TabLab<FXVerticalFrame
     @controller.refresh_data
   end
 
-
+  def on_datalist_changed(table)
+    TabStudent.update_data_table(@table, table)
+  end
 
 end

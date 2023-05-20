@@ -1,10 +1,11 @@
 # frozen_string_literal: true
-
+require 'date'
 class Lab
   def initialize(number: nil, name: nil, date_load: nil)
     raise ArgumentError, "Required fields: name, number and date!" if number.nil? || name.nil?|| date_load.nil?
     @number = number
     @name = name
+    raise ArgumentError, 'Некорректная дата!' unless Lab.validate_date(date_load)
     @date_load = date_load
   end
 
@@ -28,7 +29,14 @@ class Lab
   end
 
 
-  def self.validate_is_date(); end
+  def self.validate_date(date_in_str)
+    begin
+      date = Date.strptime(date_in_str, '%Y.%d.%m')
+      return true
+    rescue ArgumentError
+      return false
+    end
+  end
 
 
 

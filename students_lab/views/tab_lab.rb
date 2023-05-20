@@ -67,6 +67,10 @@ class TabLab<FXVerticalFrame
     btn_update.connect(SEL_COMMAND) do
       refresh
     end
+    btn_add.connect(SEL_COMMAND) do
+      @controller.add_lab
+    end
+
   end
 
   def refresh

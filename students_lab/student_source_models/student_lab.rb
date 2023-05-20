@@ -18,7 +18,8 @@ class StudentLab
     db.execute('DELETE FROM labs WHERE number = ?', id_lab)
   end
   def replace_lab(id_lab, lab)
-    db.execute('UPDATE labs SET name=?, date_load=? WHERE number=?',*lab_fields(lab), id_lab)
+    fields = lab_fields(lab)
+    db.execute('UPDATE labs SET name=?, date_load=? WHERE number=?',fields[1],fields[2], id_lab)
   end
   def get_lab_list(data_list=nil) #получение все лаб в базе
     labs_hash = db.execute('SELECT * FROM labs')

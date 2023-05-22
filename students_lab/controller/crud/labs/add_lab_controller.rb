@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require_relative '../../../lab_model/lab'
+require 'win32api'
 class AddLabController
   def initialize(student_lab)
     @student_lab = student_lab
@@ -29,5 +30,13 @@ class AddLabController
       return nil
     end
   end
+
+  def validate_date_range(new_date)
+    idx_last_date = @student_lab.lab_count
+    old_date = @student_lab.get_lab_by_number(idx_last_date).date_load
+    Lab.validate_date_range?(new_date, old_date)
+  end
+
+
 
 end

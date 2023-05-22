@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 require 'fox16'
-
+require 'win32api'
 include Fox
+
 class CreateLabDialog<FXDialogBox
   def initialize(parent, controller)
     super(parent, "Лабораторная работа", DECOR_TITLE | DECOR_BORDER | DECOR_RESIZE)
     @controller = controller
     @lab = nil
     setWidth(450)
-    setHeight(160)
+    setHeight(290)
     add_fields
   end
 
@@ -21,14 +22,24 @@ class CreateLabDialog<FXDialogBox
     frame_data = FXVerticalFrame.new(self, :opts=> LAYOUT_FILL_X|LAYOUT_FILL_Y )
     @field_text = {}
 
-    field_name = [[:number, "Номер лабораторной"], [:name, 'Название'], [:date_load, 'Дата']]
-    field_name.each do |field|
+    field_name = [[:number, "Номер лабораторной"], [:name, 'Название'], [:date_load, 'Дата'], [:themes, 'Темы'], [:tasks, 'Задачи']]
+    field_name[0..2].each do |field|
       frame_field = FXHorizontalFrame.new(frame_data)
       field_label = FXLabel.new(frame_field, field[1], :opts => LAYOUT_FIX_WIDTH)
       field_label.setWidth(150)
       text = FXTextField.new(frame_field, 40, :opts=>TEXTFIELD_NORMAL)
       @field_text[field[0]] = text
     end
+    field_name[3..4].each do |field|
+      frame_field = FXHorizontalFrame.new(frame_data)
+      field_label = FXLabel.new(frame_field, field[1], :opts => LAYOUT_FIX_WIDTH)
+      field_label.setWidth(70)
+      text = FXText.new(frame_field,:opts=> TEXT_AUTOSCROLL|LAYOUT_FIX_WIDTH)
+      text.width= 330
+
+      @field_text[field[0]] = text
+    end
+
 
     @field_text[:number].editable = false
     btn_frame = FXHorizontalFrame.new(frame_data, LAYOUT_CENTER_X)
@@ -40,9 +51,14 @@ class CreateLabDialog<FXDialogBox
     btn_back.textColor = Fox.FXRGB(0,23,175)
 
     btn_add.connect(SEL_COMMAND) do
-      @controller.save_lab(@lab)
-      self.handle(btn_add, FXSEL(Fox::SEL_COMMAND,
-                                 Fox::FXDialogBox::ID_ACCEPT), nil)
+      if @controller.validate_date_range(@lab.date_load)
+        @controller.save_lab(@lab)
+        self.handle(btn_add, FXSEL(Fox::SEL_COMMAND,
+                                   Fox::FXDialogBox::ID_ACCEPT), nil)
+      else
+        api = Win32API.new('user32', 'MessageBox', ['L', 'P', 'P', 'L'], 'I')
+        api.call(0, "Incorrect date!!", "Error", 0)
+      end
     end
 
     btn_back.connect(SEL_COMMAND) do

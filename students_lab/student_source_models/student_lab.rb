@@ -7,19 +7,19 @@ class StudentLab
   end
 
   def get_lab_by_number(id_lab)
-    hash = db.execute('SELECT * FROM labs WHERE number = ?', id_lab).first
+    hash = db.execute('SELECT * FROM labs WHERE id = ?', id_lab).first
     return nil if hash.nil?
     Lab.new(**hash.transform_keys(&:to_sym))
   end
   def add_lab(lab)
-    db.execute('insert into labs (number, name, date_load, themes, tasks) VALUES (?, ?, ?, ?, ?)', *lab_fields(lab)).first
+    db.execute('insert into labs (id, name, date_load, theme, tasks) VALUES (?, ?, ?, ?, ?)', *lab_fields(lab)).first
   end
   def remove_lab(id_lab)
-    db.execute('DELETE FROM labs WHERE number = ?', id_lab)
+    db.execute('DELETE FROM labs WHERE id = ?', id_lab)
   end
   def replace_lab(id_lab, lab)
     fields = lab_fields(lab)
-    db.execute('UPDATE labs SET name=?, date_load=? themes=? tasks=? WHERE number=?',fields[1],fields[2],fields[3], fields[4], id_lab)
+    db.execute('UPDATE labs SET name=?, date_load=?, theme=?, tasks=? WHERE id =?',fields[1],fields[2],fields[3], fields[4], id_lab)
   end
   def get_lab_list(data_list=nil) #получение все лаб в базе
     labs_hash = db.execute('SELECT * FROM labs')
@@ -44,6 +44,6 @@ class StudentLab
   private
   attr_accessor :db
   def lab_fields(lab)
-    [lab.number, lab.name, lab.date_load, lab.themes, lab.tasks]
+    [lab.id, lab.name, lab.date_load, lab.theme, lab.tasks]
   end
 end

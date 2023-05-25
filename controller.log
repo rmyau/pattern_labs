@@ -1,0 +1,5 @@
+# Logfile created on 2023-05-23 19:31:45 +0300 by logger.rb/v1.5.0
+I, [2023-05-23T19:31:45.660215 #19516]  INFO -- : Refreshing data with k_page=1 and number_students=5
+I, [2023-05-23T19:31:57.538134 #19516]  INFO -- : Changing student Git
+I, [2023-05-23T19:31:57.538393 #19516]  INFO -- : Changing student name
+I, [2023-05-23T19:32:05.052796 #19516]  INFO -- : Refreshing data with k_page=1 and number_students=5

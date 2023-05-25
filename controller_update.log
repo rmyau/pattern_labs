@@ -1,0 +1,5 @@
+# Logfile created on 2023-05-23 19:31:57 +0300 by logger.rb/v1.5.0
+I, [2023-05-23T19:32:02.359267 #19516]  INFO -- : Validating fields
+E, [2023-05-23T19:32:02.360023 #19516] ERROR -- : Error occurred while validating fields: Invalid git!
+I, [2023-05-23T19:32:03.080338 #19516]  INFO -- : Validating fields
+I, [2023-05-23T19:32:05.052191 #19516]  INFO -- : Executing add student operation

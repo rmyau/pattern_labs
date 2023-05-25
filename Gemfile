@@ -5,5 +5,7 @@ source "https://rubygems.org"
 gem 'sqlite3'
 gem 'fxruby'
 gem 'win32api'
+gem 'minitest'
+gem 'logger'
 
 # gem "rails"

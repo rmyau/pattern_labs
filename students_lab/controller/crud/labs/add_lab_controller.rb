@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require_relative '../../../lab_model/lab'
 require 'win32api'
+
 class AddLabController
   def initialize(student_lab)
     @student_lab = student_lab
@@ -41,6 +42,9 @@ class AddLabController
     end
   end
 
-
+  def error_validate()
+    api = Win32API.new('user32', 'MessageBox', ['L', 'P', 'P', 'L'], 'I')
+    api.call(0, "Incorrect date!!", "Error", 0)
+  end
 
 end

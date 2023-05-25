@@ -18,6 +18,7 @@ class CreateLabDialog<FXDialogBox
     enter_lab
   end
 
+  private
   def add_fields
     frame_data = FXVerticalFrame.new(self, :opts=> LAYOUT_FILL_X|LAYOUT_FILL_Y )
     @field_text = {}

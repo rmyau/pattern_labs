@@ -17,7 +17,6 @@ class Window<FXMainWindow
   end
 
 
-
   def create_tabs
     tab_book = FXTabBook.new(self, :opts=>LAYOUT_FILL_X|LAYOUT_FILL_Y)
     # Создаем первую вкладку

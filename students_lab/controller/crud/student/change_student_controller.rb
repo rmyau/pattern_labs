@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 require_relative 'add_student_controller'
+require 'logger'
 class ChangeStudentController<AddStudentController
   private_class_method :new
   def initialize(student_list, student_id)
     super(student_list)
     @student_id = student_id
+    @logger = Logger.new('controller_update.log') #
   end
 
   def add_view(view)

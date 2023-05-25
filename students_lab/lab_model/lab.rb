@@ -14,7 +14,7 @@ class Lab
   attr_reader :id, :name, :date_load, :tasks, :theme
 
   def to_s
-    res = "Lab#{number} #{name} #{date_load}"
+    res = "Lab#{id} #{name} #{date_load}"
   end
 
 

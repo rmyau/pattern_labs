@@ -6,7 +6,7 @@ class ChangeStudentController<AddStudentController
   def initialize(student_list, student_id)
     super(student_list)
     @student_id = student_id
-    @logger = Logger.new('controller_update.log') #
+    @logger = Logger.new('students_lab/controller_update.log') #
   end
 
   def add_view(view)

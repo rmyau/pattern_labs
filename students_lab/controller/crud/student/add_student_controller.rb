@@ -4,7 +4,7 @@ class AddStudentController
 
   def initialize(student_list)
     @student_list = student_list
-    @logger = Logger.new('controller_add.log')
+    @logger = Logger.new('students_lab/controller_add.log')
   end
 
   #привязка view
